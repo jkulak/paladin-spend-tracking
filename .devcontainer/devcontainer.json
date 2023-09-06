@@ -1,0 +1,27 @@
+{
+    "name": "jk/paladin",
+    "build": {
+        "dockerfile": "../Dockerfile"
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-python.python",
+                "editorconfig.editorconfig",
+                "github.copilot",
+                "github.copilot-labs",
+                "ms-python.isort",
+                "ms-python.pylint",
+                "ms-python.vscode-pylance"
+            ],
+            "settings": {
+                "python.pythonPath": "/usr/local/bin/python"
+            }
+        }
+    },
+    "runArgs": [
+        "--env-file=.env",
+        "--network=paladin_network",
+    ],
+    "forwardPorts": []
+}

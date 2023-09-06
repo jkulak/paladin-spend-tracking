@@ -1,0 +1,17 @@
+.DS_Store
+.vscode
+*.code-workspace
+
+__pycache__/
+.cache
+.cache-spotipy
+spotify_api_cache.sqlite-journal
+.env
+*.conf
+*.sqlite
+.cache-lastfm*
+
+
+pgdata/
+_NOTES*
+_DEV
