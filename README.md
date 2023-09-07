@@ -12,6 +12,7 @@ Then open
 
 ## Work with Alembic
 
+`alembic -c db/alembic.ini revision --autogenerate -m "Migration description"`
 `alembic -c db/alembic.ini upgrade head`
 `alembic -c db/alembic.ini downgrade -1`
 

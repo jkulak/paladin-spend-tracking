@@ -49,6 +49,7 @@ class Transaction(Base):
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     name = Column(String, index=True)
     added = Column(DateTime, default=datetime.utcnow)
+    date = Column(DateTime, default=datetime.utcnow)
     active = Column(Boolean, default=True)
     value = Column(Integer)
     payee_id = Column(Integer, ForeignKey('payee.id'))

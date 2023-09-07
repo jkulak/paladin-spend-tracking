@@ -11,6 +11,7 @@ spotify_api_cache.sqlite-journal
 *.sqlite
 .cache-lastfm*
 
+data/*.csv
 
 pg_data/
 _NOTES*
