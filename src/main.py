@@ -15,7 +15,9 @@ from sqlalchemy.orm import sessionmaker
 from csv_tools import import_csv
 from csv_tools import prepare_csv_file
 from models import Category
+from models import Label
 from models import Payee
+from models import Transaction
 
 CSV_DATA_DIR = "data"
 CSV_DATA_FILE = "PocketExpense_data_20230907.csv"
@@ -38,16 +40,10 @@ def extract_value(value):
     """
     Extract value from string.
     """
-    # Convert the amount string to an integer value in cents.
-    is_negative = value.startswith("-")
     amount_str = (
         value.replace("zł", "").replace(",", ".").replace("\xa0", "").strip()
     )  # Replace non-breaking space with a regular space.
-    value = int(float(amount_str) * 100)
-
-    # Apply negative sign if the original string was negative.
-    if is_negative:
-        value *= -1
+    value = float(amount_str)
 
     return value
 
@@ -68,34 +64,56 @@ def extract_labels(note):
 
 def process_row(row, session):
     """Save data to the database"""
+
     transaction = {
         "date": extract_date(row["Date"]),
-        "value": extract_value(row["Amount"]),
-        "payee": row["Payee"],
         "category": row["Category"],
+        "payee": row["Payee"],
+        "value": extract_value(row["Amount"]),
         "note": row["Note"],
         "labels": extract_labels(row["Note"]),
     }
 
     # Check if the payee exists or not
-    payee_instance = (
+    payee = (
         session.query(Payee).filter(Payee.name == transaction["payee"]).first()
     )
-    if not payee_instance:
-        payee_instance = Payee(name=transaction["payee"])
-        session.add(payee_instance)
+    if not payee:
+        payee = Payee(name=transaction["payee"])
+        session.add(payee)
         session.commit()
 
     # Check if the category exists or not
-    category_instance = (
-        session.query(Category)
+    category = (session.query(Category)
         .filter(Category.name == transaction["category"])
         .first()
     )
-    if not category_instance:
-        category_instance = Category(name=transaction["category"])
-        session.add(category_instance)
+    if not category:
+        category = Category(name=transaction["category"])
+        session.add(category)
         session.commit()
+
+     # Create or check Labels
+    labels = []
+    for label_name in transaction["labels"]:
+        label = session.query(Label).filter_by(name=label_name).first()
+        if not label:
+            label = Label(name=label_name)
+            session.add(label)
+            session.commit()
+        labels.append(label)
+
+    # Create Transaction
+    transaction = Transaction(
+        date=transaction["date"],
+        value=transaction["value"],
+        note=transaction["note"],
+        category=category,
+        payee=payee,
+        labels=labels
+    )
+    session.add(transaction)
+    session.commit()
 
 
 def main():

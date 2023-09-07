@@ -6,13 +6,12 @@
     "customizations": {
         "vscode": {
             "extensions": [
+                "github.copilot",
                 "ms-python.python",
                 "ms-python.isort",
                 "ms-python.pylint",
                 "ms-python.vscode-pylance",
                 "editorconfig.editorconfig",
-                "github.copilot",
-                "github.copilot-labs"
             ],
             "settings": {
                 "python.pythonPath": "/usr/local/bin/python"
@@ -21,7 +20,8 @@
     },
     "runArgs": [
         "--env-file=.env",
-        "--network=paladin_network"
+        "--network=paladin_network",
+        "--hostname=paladin",
     ],
     "forwardPorts": []
 }
