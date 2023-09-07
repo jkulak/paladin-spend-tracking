@@ -10,6 +10,7 @@ from sqlalchemy import SmallInteger
 from sqlalchemy import String
 from sqlalchemy import Table
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.orm import relationship
 
 Base = declarative_base()
@@ -69,3 +70,11 @@ class Transaction(Base, CommonBaseMixin):
     category_id = Column(Integer, ForeignKey("category.id"))
     category = relationship("Category")
     labels = relationship("Label", secondary=transaction_labels_association)
+
+    @hybrid_property
+    def payee_name(self):
+        return self.payee.name
+
+    @hybrid_property
+    def category_name(self):
+        return self.category.name
