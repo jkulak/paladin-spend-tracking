@@ -2,88 +2,118 @@
 This module imports data from Pocker Expense csv export file
 and saves it into database.
 """
-import csv
 from datetime import datetime
 import os
+import re
 import sys
 
+from dotenv import load_dotenv
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
 from sqlalchemy.orm import sessionmaker
 
-CSV_DATA_FILE = "data/PocketExpense_data_20230907.csv"
+from csv_tools import import_csv
+from csv_tools import prepare_csv_file
+from models import Category
+from models import Payee
 
+CSV_DATA_DIR = "data"
+CSV_DATA_FILE = "PocketExpense_data_20230907.csv"
 
-def prepare_csv_file(file_path, output_path, header_line='"Date&Time"'):
-    with open(file_path, 'r') as f:
-        lines = f.readlines()
+load_dotenv()
 
-    # Find the header_line and get its index
-    header_index = None
-    for i, line in enumerate(lines):
-        if line.startswith(header_line):
-            header_index = i
-            break
+DATABASE_URL = os.getenv("DB_URL")
 
-    # If header found, write header and following lines to output file
-    if header_index is not None:
-        with open(output_path, 'w') as f:
-            f.writelines(lines[header_index:])
 
 def extract_date(date):
-    """
-    Extract date from string.
-    """
+    """Extract date from string."""
+
+    # Check and replace '00' with '12' when it's close to 'AM'
+    date = re.sub(r"00:(\d{2} [APM]{2})", r"12:\1", date)
+
     return datetime.strptime(date, "%m/%d/%Y %I:%M %p")
 
-def import_csv(file_path: str):
+
+def extract_value(value):
     """
-    Import data from csv.
+    Extract value from string.
     """
-    new_headers = ["Date","Account","Category","Payee","Amount","Cleared","Note"]
+    # Convert the amount string to an integer value in cents.
+    is_negative = value.startswith("-")
+    amount_str = (
+        value.replace("zł", "").replace(",", ".").replace("\xa0", "").strip()
+    )  # Replace non-breaking space with a regular space.
+    value = int(float(amount_str) * 100)
 
-    with open(file_path, 'r', encoding='utf-8') as csv_file:
-        next(csv_file) # skip header
-        reader = csv.DictReader(csv_file, fieldnames=new_headers)
+    # Apply negative sign if the original string was negative.
+    if is_negative:
+        value *= -1
 
-        for row in reader:
-            dt = datetime.strptime(row["Date&Time"], "%m/%d/%Y %I:%M %p")
-
-            # Convert the amount string to an integer value in cents.
-            is_negative = row["Amount"].startswith("-")
-            amount_str = row["Amount"].replace("zł", "").replace(",", ".").replace("\xa0", "").strip()  # Replace non-breaking space with a regular space.
-            value = int(float(amount_str) * 100)
-
-            # Apply negative sign if the original string was negative.
-            if is_negative:
-                value *= -1
-            
-            # Here, you'd ideally have logic to lookup or create associated Payee, Category objects.
-            # For simplicity's sake, I'll just create a new Payee and Category each time.
-            # In a real-world scenario, you'd avoid creating duplicate entries.
-            payee = row["Payee"]
-            category = row["Category"]  # You may need additional logic for fields like 'icon'.
-
-            transaction = {
-
-            }
+    return value
 
 
-            
-            # transaction = Transaction(
-            #     name=row["Note"],
-            #     added=dt,
-            #     value=value,
-            #     payee_id=payee.id,
-            #     category_id=category.id
-            # )
-            
+def extract_labels(note):
+    """
+    Extract labels from note. A note might have several labels.
+    Labels are hashtags in the note.
+    """
+    labels = []
+
+    for word in note.split():
+        if word.startswith("#"):
+            labels.append(word[1:])
+
+    return labels
+
+
+def process_row(row, session):
+    """Save data to the database"""
+    transaction = {
+        "date": extract_date(row["Date"]),
+        "value": extract_value(row["Amount"]),
+        "payee": row["Payee"],
+        "category": row["Category"],
+        "note": row["Note"],
+        "labels": extract_labels(row["Note"]),
+    }
+
+    # Check if the payee exists or not
+    payee_instance = (
+        session.query(Payee).filter(Payee.name == transaction["payee"]).first()
+    )
+    if not payee_instance:
+        payee_instance = Payee(name=transaction["payee"])
+        session.add(payee_instance)
+        session.commit()
+
+    # Check if the category exists or not
+    category_instance = (
+        session.query(Category)
+        .filter(Category.name == transaction["category"])
+        .first()
+    )
+    if not category_instance:
+        category_instance = Category(name=transaction["category"])
+        session.add(category_instance)
+        session.commit()
+
 
 def main():
-    # Usage
-    prepare_csv_file(CSV_DATA_FILE, CSV_DATA_FILE + "_cleaned.csv")
-    # Call the function
-    import_csv(CSV_DATA_FILE + "_cleaned.csv")
+    """Main function."""
+
+    base_file_path = os.path.join(CSV_DATA_DIR, CSV_DATA_FILE)
+    cleaned_file_path = os.path.join(CSV_DATA_DIR, f"cleaned_{CSV_DATA_FILE}")
+
+    prepare_csv_file(base_file_path, cleaned_file_path)
+    data = import_csv(cleaned_file_path)
+
+    engine = create_engine(DATABASE_URL)
+    session_local = sessionmaker(bind=engine)
+    session = session_local()
+
+    for row in data:
+        process_row(row, session)
+
 
 if __name__ == "__main__":
     try:

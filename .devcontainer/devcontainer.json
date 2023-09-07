@@ -7,12 +7,12 @@
         "vscode": {
             "extensions": [
                 "ms-python.python",
-                "editorconfig.editorconfig",
-                "github.copilot",
-                "github.copilot-labs",
                 "ms-python.isort",
                 "ms-python.pylint",
-                "ms-python.vscode-pylance"
+                "ms-python.vscode-pylance",
+                "editorconfig.editorconfig",
+                "github.copilot",
+                "github.copilot-labs"
             ],
             "settings": {
                 "python.pythonPath": "/usr/local/bin/python"
@@ -21,7 +21,7 @@
     },
     "runArgs": [
         "--env-file=.env",
-        "--network=paladin_network",
+        "--network=paladin_network"
     ],
     "forwardPorts": []
 }
