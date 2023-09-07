@@ -7,7 +7,7 @@
 
 Then open 
 
-1. Postgrest: http://localhost:3000/transactions
+1. Postgrest: http://localhost:3000/transactions and http://localhost:3000/transaction_view and http://localhost:3000/transactions_view_materialized
 1. Adminer: http://localhost:8080/?pgsql=paladin-db&username=postgres&db=paladin&ns=public
 
 ## Work with Alembic
