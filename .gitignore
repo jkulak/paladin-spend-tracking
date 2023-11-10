@@ -16,3 +16,6 @@ data/*.csv
 pg_data/
 _NOTES*
 _DEV
+.aider*
+node_modules
+yarn.lock

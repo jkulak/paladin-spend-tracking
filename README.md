@@ -14,8 +14,9 @@ Then open
 
 1. Code is in `www` folder
 1. Build the container: `docker build -t paladin/www .` from the `www` folder
-1. Run the container in the dev mode (mounted code from host): `docker run --rm -ti -v $(pwd)/www/app:/app -p 3001:3001 --env PORT=3001 --name www paladin/www sh --login`
-1. 
+1. Run the container in the dev mode (mounted code from host): `docker run --rm -ti -v $(pwd)/www/app:/app -p 3001:3001 --env PORT=3001 --name paladin-www paladin/www sh --login`
+1. On first run install dependencies: `yarn` (they are installed in the container, but you are overwriting the dev directory with local code)
+1. Run the app: `yarn start`
 
 ## Work with Alembic
 
