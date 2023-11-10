@@ -25,13 +25,13 @@ const DataTable = () => {
             <table>
                 <thead>
                     <tr>
-                        <th onClick={() => handleHeaderClick('id')}>ID</th>
-                        <th onClick={() => handleHeaderClick('date')}>Date</th>
-                        <th onClick={() => handleHeaderClick('value')}>Value</th>
-                        <th onClick={() => handleHeaderClick('payee_name')}>Payee Name</th>
-                        <th onClick={() => handleHeaderClick('category_name')}>Category Name</th>
-                        <th onClick={() => handleHeaderClick('note')}>Note</th>
-                        <th onClick={() => handleHeaderClick('cleared')}>Cleared</th>
+                        <th onClick={() => handleHeaderClick('id')}>ID {sortColumn === 'id' ? (sortDirection === 'asc' ? '▲' : '▼') : ''}</th>
+                        <th onClick={() => handleHeaderClick('date')}>Date {sortColumn === 'date' ? (sortDirection === 'asc' ? '▲' : '▼') : ''}</th>
+                        <th onClick={() => handleHeaderClick('value')}>Value {sortColumn === 'value' ? (sortDirection === 'asc' ? '▲' : '▼') : ''}</th>
+                        <th onClick={() => handleHeaderClick('payee_name')}>Payee Name {sortColumn === 'payee_name' ? (sortDirection === 'asc' ? '▲' : '▼') : ''}</th>
+                        <th onClick={() => handleHeaderClick('category_name')}>Category Name {sortColumn === 'category_name' ? (sortDirection === 'asc' ? '▲' : '▼') : ''}</th>
+                        <th onClick={() => handleHeaderClick('note')}>Note {sortColumn === 'note' ? (sortDirection === 'asc' ? '▲' : '▼') : ''}</th>
+                        <th onClick={() => handleHeaderClick('cleared')}>Cleared {sortColumn === 'cleared' ? (sortDirection === 'asc' ? '▲' : '▼') : ''}</th>
                     </tr>
                 </thead>
                 <tbody>
