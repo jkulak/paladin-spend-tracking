@@ -56,13 +56,13 @@ const DataTable = () => {
             <table>
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Date</th>
-                        <th>Value</th>
-                        <th>Payee Name</th>
-                        <th>Category Name</th>
-                        <th>Note</th>
-                        <th>Cleared</th>
+                        <th onClick={() => handleHeaderClick('id')}>ID</th>
+                        <th onClick={() => handleHeaderClick('date')}>Date</th>
+                        <th onClick={() => handleHeaderClick('value')}>Value</th>
+                        <th onClick={() => handleHeaderClick('payee_name')}>Payee Name</th>
+                        <th onClick={() => handleHeaderClick('category_name')}>Category Name</th>
+                        <th onClick={() => handleHeaderClick('note')}>Note</th>
+                        <th onClick={() => handleHeaderClick('cleared')}>Cleared</th>
                     </tr>
                 </thead>
                 <tbody>
