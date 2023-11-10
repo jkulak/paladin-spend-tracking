@@ -1,14 +1,8 @@
 import React from 'react';
-import UserProfile from './UserProfile';
-import FilteringForm from './FilteringForm';
 import DataStatsPanel from './DataStatsPanel';
 import DataTable from './DataTable';
-
-import React from 'react';
-import UserProfile from './UserProfile';
 import FilteringForm from './FilteringForm';
-import DataStatsPanel from './DataStatsPanel';
-import DataTable from './DataTable';
+import UserProfile from './UserProfile';
 
 function App() {
   return (
@@ -20,7 +14,5 @@ function App() {
     </div>
   );
 }
-
-export default App;
 
 export default App;
