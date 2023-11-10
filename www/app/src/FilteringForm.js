@@ -13,7 +13,7 @@ const FilteringForm = ({ onSearch }) => {
         <div className="FilteringForm">
             <h2>Filtering Form</h2>
             <label htmlFor="searchInput">Search</label>
-            <input type="text" id="searchInput" name="search" />
+            <input type="text" id="searchInput" name="search" value={searchTerm} onChange={handleSearchChange} />
             <p>Random filtering form placeholder.</p>
         </div>
     );

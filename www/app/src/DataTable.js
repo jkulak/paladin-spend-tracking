@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './DataTable.css';
 
-const DataTable = () => {
+const DataTable = ({ searchTerm }) => {
     const MAX_RESULTS = 50;
     const [transactions, setTransactions] = useState([]);
     const [sortColumn, setSortColumn] = useState(null);
@@ -14,7 +14,8 @@ const DataTable = () => {
 
     useEffect(() => {
         const sortQuery = sortColumn ? `order=${sortColumn}.${sortDirection}` : '';
-        fetch(`http://localhost:3000/transaction_view?${sortQuery}&limit=${MAX_RESULTS}`)
+        const searchQuery = searchTerm ? `&note_like=${encodeURIComponent(searchTerm)}` : '';
+        fetch(`http://localhost:3000/transaction_view?${sortQuery}${searchQuery}&limit=${MAX_RESULTS}`)
             .then(response => response.json())
             .then(data => setTransactions(data))
             .catch(error => console.error('Error fetching data: ', error));
