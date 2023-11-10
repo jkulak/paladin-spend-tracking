@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './FilteringForm.css';
 
-const FilteringForm = ({ onSearch }) => {
+const FilteringForm = ({ onSearchTermChange }) => {
     const [searchTerm, setSearchTerm] = useState('');
 
     const handleSearchChange = (event) => {
