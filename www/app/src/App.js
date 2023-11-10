@@ -14,7 +14,7 @@ function App() {
   return (
     <div>
       <UserProfile />
-      <FilteringForm onSearch={handleSearch} />
+      <FilteringForm onSearchTermChange={handleSearch} />
       <DataStatsPanel />
       <DataTable searchTerm={searchTerm} />
     </div>
