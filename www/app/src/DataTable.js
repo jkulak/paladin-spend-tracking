@@ -2,9 +2,12 @@ import React, { useEffect, useState } from 'react';
 
 const DataTable = () => {
     const [transactions, setTransactions] = useState([]);
+    const [sortColumn, setSortColumn] = useState(null);
+    const [sortDirection, setSortDirection] = useState('asc');
 
     useEffect(() => {
-        fetch('http://localhost:3000/transaction_view')
+        const sortQuery = sortColumn ? `order=${sortColumn}.${sortDirection}` : '';
+        fetch(`http://localhost:3000/transaction_view?${sortQuery}`)
             .then(response => response.json())
             .then(data => setTransactions(data))
             .catch(error => console.error('Error fetching data: ', error));
