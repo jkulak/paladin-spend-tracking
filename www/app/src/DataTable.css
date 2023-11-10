@@ -17,4 +17,5 @@
     text-align: left;
     background-color: #f2f2f2;
     color: black;
+    cursor: pointer; /* Add this line to change the cursor to a pointer */
 }
