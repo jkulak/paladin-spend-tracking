@@ -31,7 +31,7 @@ const DataTable = () => {
                         <th onClick={() => handleHeaderClick('payee_name')}>Payee Name {sortColumn === 'payee_name' ? (sortDirection === 'asc' ? '▲' : '▼') : ''}</th>
                         <th onClick={() => handleHeaderClick('category_name')}>Category Name {sortColumn === 'category_name' ? (sortDirection === 'asc' ? '▲' : '▼') : ''}</th>
                         <th onClick={() => handleHeaderClick('note')}>Note {sortColumn === 'note' ? (sortDirection === 'asc' ? '▲' : '▼') : ''}</th>
-                        <th onClick={() => handleHeaderClick('cleared')}>Cleared {sortColumn === 'cleared' ? (sortDirection === 'asc' ? '▲' : '▼') : ''}</th>
+                        // The "cleared" column header is removed
                     </tr>
                 </thead>
                 <tbody>
@@ -43,7 +43,7 @@ const DataTable = () => {
                             <td>{transaction.payee_name}</td>
                             <td>{transaction.category_name}</td>
                             <td>{transaction.note}</td>
-                            <td>{transaction.cleared ? 'Yes' : 'No'}</td>
+                            // The "cleared" column data is removed
                         </tr>
                     ))}
                 </tbody>
