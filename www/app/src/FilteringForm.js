@@ -1,7 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './FilteringForm.css';
 
-const FilteringForm = () => {
+const FilteringForm = ({ onSearch }) => {
+    const [searchTerm, setSearchTerm] = useState('');
+
+    const handleSearchChange = (event) => {
+        const term = event.target.value;
+        setSearchTerm(term);
+        onSearch(term);
+    };
     return (
         <div className="FilteringForm">
             <h2>Filtering Form</h2>
