@@ -1,17 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './DataTable.css';
-import { useDataLoader } from './DataLoader';
 
-const DataTable = ({ searchTerm }) => {
-    const MAX_RESULTS = 50;
+const DataTable = ({ transactions, onSort, onTagClick }) => {
     const [sortColumn, setSortColumn] = useState(null);
     const [sortDirection, setSortDirection] = useState('asc');
-    const { transactions, error } = useDataLoader(searchTerm, sortColumn, sortDirection, MAX_RESULTS);
 
     const handleHeaderClick = (column) => {
-        setSortDirection(sortColumn === column && sortDirection === 'asc' ? 'desc' : 'asc');
+        const newDirection = sortColumn === column && sortDirection === 'asc' ? 'desc' : 'asc';
+        setSortDirection(newDirection);
         setSortColumn(column);
+        onSort(column, newDirection);
     };
+
+    function highlightTags(note, onTagClick) {
+        return note.split(/(#\w+)/g).map((word, index) => {
+            if (word.startsWith('#')) {
+                return <span key={index} className="tag" onClick={() => onTagClick(word)}>{word}</span>;
+            } else {
+                return word;
+            }
+        });
+    }    
 
     return (
         <div className="DataTable">
@@ -19,12 +28,13 @@ const DataTable = ({ searchTerm }) => {
             <table>
                 <thead>
                     <tr>
-                        <th onClick={() => handleHeaderClick('id')}>ID {sortColumn === 'id' ? (sortDirection === 'asc' ? '▲' : '▼') : ''}</th>
-                        <th onClick={() => handleHeaderClick('date')}>Date {sortColumn === 'date' ? (sortDirection === 'asc' ? '▲' : '▼') : ''}</th>
-                        <th onClick={() => handleHeaderClick('value')}>Value {sortColumn === 'value' ? (sortDirection === 'asc' ? '▲' : '▼') : ''}</th>
-                        <th onClick={() => handleHeaderClick('payee_name')}>Payee Name {sortColumn === 'payee_name' ? (sortDirection === 'asc' ? '▲' : '▼') : ''}</th>
-                        <th onClick={() => handleHeaderClick('category_name')}>Category Name {sortColumn === 'category_name' ? (sortDirection === 'asc' ? '▲' : '▼') : ''}</th>
-                        <th onClick={() => handleHeaderClick('note')}>Note {sortColumn === 'note' ? (sortDirection === 'asc' ? '▲' : '▼') : ''}</th>
+                        <th id="idHeader" onClick={() => handleHeaderClick('id')}>ID {sortColumn === 'id' ? (sortDirection === 'asc' ? '▲' : '▼') : ''}</th>
+                        <th id="dateHeader" onClick={() => handleHeaderClick('date')}>Date {sortColumn === 'date' ? (sortDirection === 'asc' ? '▲' : '▼') : ''}</th>
+                        <th id="valueHeader" onClick={() => handleHeaderClick('value')}>Value {sortColumn === 'value' ? (sortDirection === 'asc' ? '▲' : '▼') : ''}</th>
+                        <th id="payeeNameHeader" onClick={() => handleHeaderClick('payee_name')}>Payee Name {sortColumn === 'payee_name' ? (sortDirection === 'asc' ? '▲' : '▼') : ''}</th>
+                        <th id="categoryNameHeader" onClick={() => handleHeaderClick('category_name')}>Category Name {sortColumn === 'category_name' ? (sortDirection === 'asc' ? '▲' : '▼') : ''}</th>
+                        <th id="noteHeader" onClick={() => handleHeaderClick('note')}>Note {sortColumn === 'note' ? (sortDirection === 'asc' ? '▲' : '▼') : ''}</th>
+                        <th id="labelsHeader" onClick={() => handleHeaderClick('labels')}>Labels {sortColumn === 'labels' ? (sortDirection === 'asc' ? '▲' : '▼') : ''}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -32,10 +42,11 @@ const DataTable = ({ searchTerm }) => {
                         <tr key={transaction.id}>
                             <td>{transaction.id}</td>
                             <td>{transaction.date}</td>
-                            <td>{transaction.value}</td>
+                            <td><span className={transaction.value >= 0 ? 'positiveValue' : 'negativeValue'}>{transaction.value}</span></td>
                             <td>{transaction.payee_name}</td>
                             <td>{transaction.category_name}</td>
-                            <td>{transaction.note}</td>
+                            <td>{highlightTags(transaction.note, onTagClick)}</td>
+                            <td>{transaction.note.split(/(#\w+)/g).filter(word => word.startsWith('#')).join(', ')}</td>
                         </tr>
                     ))}
                 </tbody>

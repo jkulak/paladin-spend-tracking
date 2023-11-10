@@ -1,41 +1,41 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { API_URL, DEBOUNCE_TIME, DISPLAY_MAX } from './constants';
 
-const useDataLoader = (searchTerm, sortColumn, sortDirection, maxResults) => {
-    const [transactions, setTransactions] = useState([]);
+const useDataLoader = (searchTerm, setTransactions, sortColumn, sortDirection) => {
     const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(searchTerm);
-    const [error, setError] = useState(null);
 
-    const debounce = (func, wait) => {
-        let timeout;
-        return function executedFunction(...args) {
-            const later = () => {
-                clearTimeout(timeout);
-                func(...args);
-            };
-            clearTimeout(timeout);
-            timeout = setTimeout(later, wait);
-        };
-    };
-
+    // Implement the debounce logic directly within useCallback
     const debouncedApiCall = useCallback(
-        debounce((nextValue) => setDebouncedSearchTerm(nextValue), 500),
-        [] // will be created only once initially
+        (nextValue) => {
+            const handler = setTimeout(() => {
+                setDebouncedSearchTerm(nextValue);
+            }, DEBOUNCE_TIME);
+
+            return () => {
+                clearTimeout(handler);
+            };
+        },
+        [setDebouncedSearchTerm] // Dependencies
     );
 
     useEffect(() => {
-        debouncedApiCall(searchTerm);
+        const debounceHandler = debouncedApiCall(searchTerm);
+        return () => {
+            if (debounceHandler) debounceHandler();
+        };
     }, [searchTerm, debouncedApiCall]);
 
     useEffect(() => {
-        const sortQuery = sortColumn ? `order=${sortColumn}.${sortDirection}` : '';
-        const searchQuery = searchTerm ? `&note=ilike.*${encodeURIComponent(searchTerm)}*` : '';
-        fetch(`http://localhost:3000/transaction_view?${sortQuery}${searchQuery}&limit=${maxResults}`)
+        const searchQuery = debouncedSearchTerm ? `?note=ilike.*${encodeURIComponent(debouncedSearchTerm)}*` : '';
+        const sortQuery = sortColumn ? `&order=${sortColumn}.${sortDirection}` : '';
+        const finalQuery = searchQuery ? `${searchQuery}${sortQuery}` : `?${sortQuery.slice(1)}`;
+
+        fetch(`${API_URL}${finalQuery}&limit=${DISPLAY_MAX}`)
             .then(response => response.json())
             .then(data => setTransactions(Array.isArray(data) ? data : []))
-            .catch(error => setError('Error fetching data: ', error));
-    }, [debouncedSearchTerm, sortColumn, sortDirection]);
+            .catch(error => console.error('Error fetching data: ', error));
+    }, [setTransactions, debouncedSearchTerm, sortColumn, sortDirection]);
 
-    return { transactions, error };
 };
 
 export { useDataLoader };

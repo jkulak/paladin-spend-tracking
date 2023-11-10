@@ -1,21 +1,46 @@
-.DataTable {
-    margin: 20px;
-    padding: 10px;
-    border-collapse: collapse;
-    width: 100%;
+th {
+    cursor: pointer;
 }
 
-.DataTable th,
-.DataTable td {
-    border: 1px solid #ddd;
-    padding: 8px;
+#idHeader {
+    width: 60px;
 }
 
-.DataTable th {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    text-align: left;
-    background-color: #f2f2f2;
-    color: black;
-    cursor: pointer; /* Add this line to change the cursor to a pointer */
+#dateHeader {
+    width: 210px;
+}   
+
+#valueHeader {
+    width: 120px;
+}
+
+#payeeNameHeader {
+    width: 170px;
+}
+
+#categoryNameHeader {
+    width: 180px;
+}
+
+/* #noteHeader {
+    width: 500px;
+} */
+
+.positiveValue {
+    background-color: #e1f8d5; /* pastel color */
+    border-radius: 5px; /* rounded corners */
+    padding: 2px 5px; /* some padding */
+}
+
+.negativeValue {
+    background-color: #f8d5d5; /* light red */
+    border-radius: 5px; /* rounded corners */
+    padding: 2px 5px; /* some padding */
+}
+
+.tag {
+    background-color: #e1f8d5; /* pastel color */
+    border-radius: 5px; /* rounded corners */
+    padding: 2px 5px; /* some padding */
+    cursor: pointer;
 }
