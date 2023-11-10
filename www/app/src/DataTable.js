@@ -36,7 +36,7 @@ const DataTable = ({ searchTerm }) => {
 
     useEffect(() => {
         const sortQuery = sortColumn ? `order=${sortColumn}.${sortDirection}` : '';
-        const searchQuery = searchTerm ? `&note_like=${encodeURIComponent(searchTerm)}` : '';
+        const searchQuery = searchTerm ? `&note=ilike.*${encodeURIComponent(searchTerm)}*` : '';
         fetch(`http://localhost:3000/transaction_view?${sortQuery}${searchQuery}&limit=${MAX_RESULTS}`)
             .then(response => response.json())
             .then(data => setTransactions(Array.isArray(data) ? data : []))
