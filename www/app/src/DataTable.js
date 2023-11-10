@@ -20,39 +20,7 @@ const DataTable = () => {
     }, [sortColumn, sortDirection]);
 
     return (
-        <div>
-            <h2>Data Table</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th onClick={() => handleHeaderClick('id')}>ID</th>
-                        <th onClick={() => handleHeaderClick('date')}>Date</th>
-                        <th onClick={() => handleHeaderClick('value')}>Value</th>
-                        <th onClick={() => handleHeaderClick('payee_name')}>Payee Name</th>
-                        <th onClick={() => handleHeaderClick('category_name')}>Category Name</th>
-                        <th onClick={() => handleHeaderClick('note')}>Note</th>
-                        <th onClick={() => handleHeaderClick('cleared')}>Cleared</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {transactions.map(transaction => (
-                        <tr key={transaction.id}>
-                            <td>{transaction.id}</td>
-                            <td>{transaction.date}</td>
-                            <td>{transaction.value}</td>
-                            <td>{transaction.payee_name}</td>
-                            <td>{transaction.category_name}</td>
-                            <td>{transaction.note}</td>
-                            <td>{transaction.cleared ? 'Yes' : 'No'}</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-        </div>
-    );
-
-    return (
-        <div>
+        <div className="DataTable">
             <h2>Data Table</h2>
             <table>
                 <thead>
