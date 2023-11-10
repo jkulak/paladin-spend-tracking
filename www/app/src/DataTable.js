@@ -19,8 +19,8 @@ const DataTable = () => {
                         <th>ID</th>
                         <th>Date</th>
                         <th>Value</th>
-                        <th>Payee ID</th>
-                        <th>Category ID</th>
+                        <th>Payee Name</th>
+                        <th>Category Name</th>
                         <th>Note</th>
                         <th>Cleared</th>
                     </tr>
@@ -31,8 +31,8 @@ const DataTable = () => {
                             <td>{transaction.id}</td>
                             <td>{transaction.date}</td>
                             <td>{transaction.value}</td>
-                            <td>{transaction.payee_id}</td>
-                            <td>{transaction.category_id}</td>
+                            <td>{transaction.payee_name}</td>
+                            <td>{transaction.category_name}</td>
                             <td>{transaction.note}</td>
                             <td>{transaction.cleared ? 'Yes' : 'No'}</td>
                         </tr>
