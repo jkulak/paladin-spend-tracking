@@ -39,7 +39,7 @@ const DataTable = ({ searchTerm }) => {
         const searchQuery = searchTerm ? `&note_like=${encodeURIComponent(searchTerm)}` : '';
         fetch(`http://localhost:3000/transaction_view?${sortQuery}${searchQuery}&limit=${MAX_RESULTS}`)
             .then(response => response.json())
-            .then(data => setTransactions(data))
+            .then(data => setTransactions(Array.isArray(data) ? data : []))
             .catch(error => console.error('Error fetching data: ', error));
     }, [debouncedSearchTerm, sortColumn, sortDirection]);
 
