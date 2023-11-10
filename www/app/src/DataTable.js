@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import './DataTable.css';
 
 const DataTable = ({ searchTerm }) => {
@@ -6,6 +6,28 @@ const DataTable = ({ searchTerm }) => {
     const [transactions, setTransactions] = useState([]);
     const [sortColumn, setSortColumn] = useState(null);
     const [sortDirection, setSortDirection] = useState('asc');
+    const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(searchTerm);
+
+    const debounce = (func, wait) => {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    };
+
+    const debouncedApiCall = useCallback(
+        debounce((nextValue) => setDebouncedSearchTerm(nextValue), 500),
+        [] // will be created only once initially
+    );
+
+    useEffect(() => {
+        debouncedApiCall(searchTerm);
+    }, [searchTerm, debouncedApiCall]);
 
     const handleHeaderClick = (column) => {
         setSortDirection(sortColumn === column && sortDirection === 'asc' ? 'desc' : 'asc');
@@ -19,7 +41,7 @@ const DataTable = ({ searchTerm }) => {
             .then(response => response.json())
             .then(data => setTransactions(data))
             .catch(error => console.error('Error fetching data: ', error));
-    }, [sortColumn, sortDirection]);
+    }, [debouncedSearchTerm, sortColumn, sortDirection]);
 
     return (
         <div className="DataTable">
