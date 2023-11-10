@@ -34,7 +34,7 @@ const DataTable = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {transactions.map(transaction => (
+                    {transactions.slice(0, 50).map(transaction => (
                         <tr key={transaction.id}>
                             <td>{transaction.id}</td>
                             <td>{transaction.date}</td>
