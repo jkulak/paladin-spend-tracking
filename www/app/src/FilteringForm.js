@@ -7,7 +7,7 @@ const FilteringForm = ({ onSearchTermChange }) => {
     const handleSearchChange = (event) => {
         const term = event.target.value;
         setSearchTerm(term);
-        onSearch(term);
+        onSearchTermChange(term);
     };
     return (
         <div className="FilteringForm">
