@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './DataTable.css';
 
 const DataTable = () => {
+    const MAX_RESULTS = 50;
     const [transactions, setTransactions] = useState([]);
     const [sortColumn, setSortColumn] = useState(null);
     const [sortDirection, setSortDirection] = useState('asc');
@@ -13,7 +14,7 @@ const DataTable = () => {
 
     useEffect(() => {
         const sortQuery = sortColumn ? `order=${sortColumn}.${sortDirection}` : '';
-        fetch(`http://localhost:3000/transaction_view?${sortQuery}`)
+        fetch(`http://localhost:3000/transaction_view?${sortQuery}&limit=${MAX_RESULTS}`)
             .then(response => response.json())
             .then(data => setTransactions(data))
             .catch(error => console.error('Error fetching data: ', error));
@@ -34,7 +35,7 @@ const DataTable = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {transactions.slice(0, 50).map(transaction => (
+                    {transactions.slice(0, MAX_RESULTS).map(transaction => (
                         <tr key={transaction.id}>
                             <td>{transaction.id}</td>
                             <td>{transaction.date}</td>
