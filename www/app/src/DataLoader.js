@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 const useDataLoader = (searchTerm, sortColumn, sortDirection, maxResults) => {
     const [transactions, setTransactions] = useState([]);
@@ -18,7 +18,7 @@ const useDataLoader = (searchTerm, sortColumn, sortDirection, maxResults) => {
     };
 
     const debouncedApiCall = useCallback(
-        debounce((nextValue) => setDebouncedSearchTerm(nextValue), 500),
+        debounce((nextValue) => setDebouncedSearchTerm(nextValue), 800),
         [] // will be created only once initially
     );
 
