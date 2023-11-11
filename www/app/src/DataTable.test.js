@@ -71,7 +71,7 @@ describe('DataTable', () => {
         const { getByText, getByLabelText } = render(<DataTable searchTerm="" />);
 
         // Add text in the filter form input field
-        fireEvent.change(getByLabelText('Search'), { target: { value: 'Rent' } });
+        fireEvent.change(document.getElementById('searchInput'), { target: { value: 'Rent' } });
 
         // Check that the table has reloaded and displays the correct data
         expect(getByText('2')).toBeInTheDocument();
