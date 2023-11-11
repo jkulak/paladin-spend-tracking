@@ -1,8 +1,8 @@
 import '@testing-library/jest-dom';
 import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
-import { useDataLoader } from './DataLoader';
 import App from './App';
+import { useDataLoader } from './DataLoader';
 import DataTable from './DataTable';
 
 jest.mock('./DataLoader');
@@ -72,7 +72,7 @@ describe('DataTable', () => {
         const { getByText } = render(<App />);
 
         // Add text in the filter form input field
-        fireEvent.change(getByText('Search').nextSibling, { target: { value: 'Rent' } });
+        fireEvent.change(document.getElementById('searchInput'), { target: { value: 'Rent' } });
 
         // Check that the table has reloaded and displays the correct data
         expect(getByText('2')).toBeInTheDocument();
