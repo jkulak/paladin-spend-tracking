@@ -46,12 +46,12 @@ describe('DataTable', () => {
         const { getByText } = render(<DataTable searchTerm="" />);
 
         // Click the 'Value' column header to sort by value in ascending order
-        fireEvent.click(getByText(/Value/));
+        fireEvent.click(getByTestId('valueHeader'));
         // Check that the first row has the smallest value
         expect(getByText('100')).toBeInTheDocument();
 
         // Click the 'Value' column header again to sort by value in descending order
-        fireEvent.click(getByText(/Value/));
+        fireEvent.click(getByTestId('valueHeader'));
         // Check that the first row has the largest value
         expect(getByText('500')).toBeInTheDocument();
     });
