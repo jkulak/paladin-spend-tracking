@@ -1,6 +1,6 @@
-import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
+import { fireEvent, render } from '@testing-library/react';
+import React from 'react';
 import { useDataLoader } from './DataLoader';
 import DataTable from './DataTable';
 
@@ -43,7 +43,7 @@ describe('DataTable', () => {
             error: null,
         });
 
-        const { getByText, getByTestId } = render(<DataTable searchTerm="" />);
+        const { getByText } = render(<DataTable searchTerm="" />);
 
         // Click the 'Value' column header to sort by value in ascending order
         fireEvent.click(document.getElementById('valueHeader'));
