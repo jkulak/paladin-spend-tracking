@@ -25,7 +25,9 @@ describe('DataTable', () => {
         expect(getByText('2021-01-01')).toBeInTheDocument();
         expect(getByText('100')).toBeInTheDocument();
         expect(getByText('John Doe')).toBeInTheDocument();
-        expect(getByText('Groceries')).toBeInTheDocument();
+        const groceriesElements = getAllByText('Groceries');
+        expect(groceriesElements[0]).toBeInTheDocument();
+        expect(groceriesElements[1]).toBeInTheDocument();
         expect(getByText('Test note')).toBeInTheDocument();
     });
 });
