@@ -43,7 +43,7 @@ describe('DataTable', () => {
             error: null,
         });
 
-        const { getByText } = render(<DataTable searchTerm="" />);
+        const { getByText, getByTestId } = render(<DataTable searchTerm="" />);
 
         // Click the 'Value' column header to sort by value in ascending order
         fireEvent.click(getByTestId('valueHeader'));
