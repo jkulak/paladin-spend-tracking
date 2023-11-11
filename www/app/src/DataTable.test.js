@@ -19,7 +19,7 @@ describe('DataTable', () => {
             error: null,
         });
 
-        const { getByText } = render(<DataTable searchTerm="" />);
+        const { getByText, getAllByText } = render(<DataTable searchTerm="" />);
 
         expect(getByText('1')).toBeInTheDocument();
         expect(getByText('2021-01-01')).toBeInTheDocument();
