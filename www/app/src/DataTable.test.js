@@ -14,7 +14,6 @@ describe('DataTable', () => {
         { id: 3, date: '2021-03-01', value: 300, payee_name: 'Bob Smith', category_name: 'Utilities', note: 'Electricity bill' },
         { id: 4, date: '2021-04-01', value: 400, payee_name: 'Alice Johnson', category_name: 'Groceries', note: 'Grocery shopping' },
         { id: 5, date: '2021-05-01', value: 500, payee_name: 'Charlie Brown', category_name: 'Entertainment', note: 'Movie tickets' },
-        // Additional mock transactions
         { id: 6, date: '2021-06-01', value: 600, payee_name: 'John Doe', category_name: 'Travel', note: 'Flight booking' },
         { id: 7, date: '2021-07-01', value: 700, payee_name: 'Jane Doe', category_name: 'Health', note: 'Gym membership' },
         { id: 8, date: '2021-08-01', value: 800, payee_name: 'John Doe', category_name: 'Insurance', note: 'Car insurance' },
