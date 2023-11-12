@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { API_URL } from './constants';
+import { API_URL, DISPLAY_MAX } from './constants';
 
 const useDataLoader = (searchTerm, setTransactions, sortColumn, sortDirection) => {
     const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(searchTerm);
@@ -30,7 +30,7 @@ const useDataLoader = (searchTerm, setTransactions, sortColumn, sortDirection) =
         const sortQuery = sortColumn ? `&order=${sortColumn}.${sortDirection}` : '';
         const finalQuery = searchQuery ? `${searchQuery}${sortQuery}` : `?${sortQuery.slice(1)}`;
 
-        import { API_URL, DISPLAY_MAX } from './constants';
+        
 
         fetch(`${API_URL}${finalQuery}&limit=${DISPLAY_MAX}`)
             .then(response => response.json())
