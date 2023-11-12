@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import DataTable from './DataTable';
 
@@ -25,4 +25,12 @@ describe('DataTable', () => {
             expect(screen.getAllByText(transaction.note).length).toBe(mockTransactions.filter(t => t.note === transaction.note).length);
         });
     });
+it('sorts the table when a column header is clicked', () => {
+    const mockOnSort = jest.fn();
+    render(<DataTable transactions={mockTransactions} onSort={mockOnSort} />);
+
+    fireEvent.click(screen.getByText('Note'));
+
+    expect(mockOnSort).toHaveBeenCalledWith('note', 'asc');
+});
 });
