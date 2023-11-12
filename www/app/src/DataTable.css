@@ -5,6 +5,10 @@ th {
     cursor: pointer;
 }
 
+#idHeader {
+    width: 40px;
+}
+
 
 .tag {
     background-color: #e1f8d5; /* pastel color */
