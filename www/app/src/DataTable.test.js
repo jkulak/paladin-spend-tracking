@@ -3,9 +3,9 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import React from 'react';
 import { act } from 'react-dom/test-utils';
 import DataTable from './DataTable';
+import { mockTransactions } from './mockTransactions';
 
 describe('DataTable', () => {
-    import { mockTransactions } from './mockTransactions';
 
     it('loads and displays transactions', () => {
         const mockOnSort = jest.fn();
