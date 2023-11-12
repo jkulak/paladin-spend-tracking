@@ -63,8 +63,38 @@ describe('DataTable', () => {
         // Check that all 15 elements are rendered
         expect(queryByText('16')).not.toBeInTheDocument();
 
-        // Check in one instruction that all 15 elements from the mockTransactions array are rendered by countint the numer of rows in the table
-        expect(document.querySelectorAll('tbody tr')).toHaveLength(15);
+    it('filters data correctly when user enters a search term', () => {
+        // Mock the DataLoader to return filtered transactions when "Rent" is searched
+        useDataLoader.mockReturnValue({
+            transactions: mockTransactions.filter(transaction => transaction.note.includes('Rent')),
+            error: null,
+        });
+
+        const { getByText, getByLabelText, queryByText } = render(<DataTable searchTerm="Rent" />);
+
+        // Simulate user input into the search field
+        const searchInput = getByLabelText('Search');
+        fireEvent.change(searchInput, { target: { value: 'Rent' } });
+
+        // Validate that the table displays the proper transactions for "Rent"
+        const rentTransactions = mockTransactions.filter(transaction => transaction.note.includes('Rent'));
+        rentTransactions.forEach(transaction => {
+            expect(getByText(transaction.id.toString())).toBeInTheDocument();
+            expect(getByText(transaction.date)).toBeInTheDocument();
+            expect(getByText(transaction.value.toString())).toBeInTheDocument();
+            expect(getByText(transaction.payee_name)).toBeInTheDocument();
+            expect(getByText(transaction.category_name)).toBeInTheDocument();
+            expect(getByText(transaction.note)).toBeInTheDocument();
+        });
+
+        // Check that transactions without "Rent" in the note are not displayed
+        const nonRentTransactions = mockTransactions.filter(transaction => !transaction.note.includes('Rent'));
+        nonRentTransactions.forEach(transaction => {
+            expect(queryByText(transaction.id.toString())).not.toBeInTheDocument();
+        });
+
+        // Check that the number of rows in the table matches the number of "Rent" transactions
+        expect(document.querySelectorAll('tbody tr')).toHaveLength(rentTransactions.length);
     });
 
     it('sorts data correctly when column header is clicked', () => {
