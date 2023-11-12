@@ -65,7 +65,7 @@ describe('DataTable', () => {
 
     it('triggers data reload and loads proper data when text is added in filter form input field', () => {
         useDataLoader.mockReturnValue({
-            transactions: mockTransactions,
+            transactions: mockTransactions.filter(transaction => transaction.note.includes('Rent')),
             error: null,
         });
 
