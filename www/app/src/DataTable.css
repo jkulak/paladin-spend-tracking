@@ -6,8 +6,28 @@ th {
 }
 
 #idHeader {
-    width: 40px;
+    width: 60px;
 }
+
+#dateHeader {
+    width: 210px;
+}   
+
+#valueHeader {
+    width: 120px;
+}
+
+#payeeNameHeader {
+    width: 170px;
+}
+
+#categoryNameHeader {
+    width: 180px;
+}
+
+/* #noteHeader {
+    width: 500px;
+} */
 
 
 .tag {
