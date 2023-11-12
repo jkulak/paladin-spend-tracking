@@ -12,7 +12,9 @@ test('loads and displays transactions', async () => {
   const { getByLabelText, findByText } = render(<App />);
 
   // Simulate entering "note" in the Filtering Form input
-  fireEvent.change(getByLabelText(/Search/i), { target: { value: 'note' } });
+  await act(async () => {
+    fireEvent.change(getByLabelText(/Search/i), { target: { value: 'note' } });
+  });
 
   // Check if the transactions are displayed correctly
   for (const transaction of mockTransactions) {
