@@ -89,13 +89,13 @@ describe('DataTable', () => {
             error: null,
         });
 
-        const { getByText, queryByText } = render(<DataTable searchTerm="Rent" />);
+        const { getByText, queryByText, getAllByText } = render(<DataTable searchTerm="Rent" />);
 
         // Wait for the debounce time before checking the results
         await new Promise(r => setTimeout(r, 800));
 
         // Check that the transactions matching the search term are displayed
-        expect(getByText('Rent')).toBeInTheDocument();
+        expect(getAllByText('Rent')).toHaveLength(1);
 
         // Check that transactions not matching the search term are not displayed
         expect(queryByText('Groceries')).not.toBeInTheDocument();
