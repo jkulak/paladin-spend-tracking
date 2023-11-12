@@ -45,5 +45,11 @@ const DataTable = ({ transactions, onSort }) => {
 
 export default DataTable;
 function highlightTags(note) {
-    return note.replace(/(#\w+)/g, '<span class="tag">$1</span>');
+    return note.split(/(#\w+)/g).map((word, index) => {
+        if (word.startsWith('#')) {
+            return <span key={index} className="tag">{word}</span>;
+        } else {
+            return word;
+        }
+    });
 }
