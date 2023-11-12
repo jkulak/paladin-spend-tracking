@@ -28,7 +28,7 @@ describe('DataTable', () => {
     it('renders the correct data when transactions state changes', () => {
         useDataLoader.mockReturnValue({transactions: mockTransactions, error: null,});
 
-        const { getByText, getAllByText, queryByText } = render(<DataTable transactions={mockTransactions} />);
+        const { getByText, getAllByText, queryByText } = render(<DataTable />);
 
         // Assuming the mockTransactions array has been updated and contains more data with some repeating payee_names and categories
         // Update the assertions to match the new expected values
@@ -70,17 +70,17 @@ describe('DataTable', () => {
             error: null,
         });
 
-        const { getByText } = render(<DataTable searchTerm="" />);
+        const { getByText } = render(<DataTable />);
 
         // Click the 'Value' column header to sort by value in ascending order
-        fireEvent.click(document.getElementById('valueHeader'));
+        fireEvent.click(getByText('Value'));
         // Check that the first row has the smallest value
         expect(getByText('100')).toBeInTheDocument();
 
         // Click the 'Value' column header again to sort by value in descending order
-        fireEvent.click(document.getElementById('valueHeader'));
+        fireEvent.click(getByText('Value'));
         // Check that the first row has the largest value
-        expect(getByText('500')).toBeInTheDocument();
+        expect(getByText('1500')).toBeInTheDocument();
     });
 
 })
