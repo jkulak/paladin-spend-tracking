@@ -28,8 +28,9 @@ const useDataLoader = (searchTerm, setTransactions, sortColumn, sortDirection) =
     useEffect(() => {
         const searchQuery = debouncedSearchTerm ? `?note=ilike.*${encodeURIComponent(debouncedSearchTerm)}*` : '';
         const sortQuery = sortColumn ? `&order=${sortColumn}.${sortDirection}` : '';
+        const finalQuery = searchQuery ? `${searchQuery}${sortQuery}` : `?${sortQuery.slice(1)}`;
 
-        fetch(`${API_URL}${searchQuery}${sortQuery}`)
+        fetch(`${API_URL}${finalQuery}`)
             .then(response => response.json())
             .then(data => setTransactions(Array.isArray(data) ? data : []))
             .catch(error => console.error('Error fetching data: ', error));
