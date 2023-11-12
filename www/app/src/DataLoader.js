@@ -1,10 +1,8 @@
 import { useCallback, useEffect, useState } from 'react';
 import { API_URL } from './constants';
 
-const useDataLoader = (searchTerm, sortColumn, sortDirection, maxResults) => {
-    const [transactions, setTransactions] = useState([]);
+const useDataLoader = (searchTerm, setTransactions) => {
     const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(searchTerm);
-    const [error, setError] = useState(null);
 
     const debounce = (func, wait) => {
         let timeout;

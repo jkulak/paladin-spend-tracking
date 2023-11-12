@@ -28,7 +28,7 @@ describe('DataTable', () => {
     it('renders the correct data when transactions state changes', () => {
         useDataLoader.mockReturnValue({transactions: mockTransactions, error: null,});
 
-        const { getByText, getAllByText, queryByText } = render(<DataTable searchTerm="" />);
+        const { getByText, getAllByText, queryByText } = render(<DataTable transactions={mockTransactions} />);
 
         // Assuming the mockTransactions array has been updated and contains more data with some repeating payee_names and categories
         // Update the assertions to match the new expected values

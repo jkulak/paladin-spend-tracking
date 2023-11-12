@@ -1,12 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './DataTable.css';
-import { useDataLoader } from './DataLoader';
 
-const DataTable = ({ searchTerm }) => {
-    const MAX_RESULTS = 50;
+const DataTable = ({ transactions }) => {
     const [sortColumn, setSortColumn] = useState(null);
     const [sortDirection, setSortDirection] = useState('asc');
-    const { transactions, error } = useDataLoader(searchTerm, sortColumn, sortDirection, MAX_RESULTS);
 
     const handleHeaderClick = (column) => {
         setSortDirection(sortColumn === column && sortDirection === 'asc' ? 'desc' : 'asc');
