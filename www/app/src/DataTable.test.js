@@ -1,4 +1,6 @@
-import '@testing-library/jest-dom';
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import DataTable from './DataTable';
 
 describe('DataTable', () => {
     const mockTransactions = [
@@ -9,5 +11,17 @@ describe('DataTable', () => {
         { id: 5, date: '2021-05-01', value: -550, payee_name: 'Charlie Brown', category_name: 'Entertainment', note: 'Movie tickets' },
     ];
 
-    
-})
+    it('loads and displays transactions', () => {
+        const mockOnSort = jest.fn();
+        render(<DataTable transactions={mockTransactions} onSort={mockOnSort} />);
+
+        mockTransactions.forEach(transaction => {
+            expect(screen.getByText(transaction.id)).toBeInTheDocument();
+            expect(screen.getByText(transaction.date)).toBeInTheDocument();
+            expect(screen.getByText(transaction.value)).toBeInTheDocument();
+            expect(screen.getByText(transaction.payee_name)).toBeInTheDocument();
+            expect(screen.getByText(transaction.category_name)).toBeInTheDocument();
+            expect(screen.getByText(transaction.note)).toBeInTheDocument();
+        });
+    });
+});
