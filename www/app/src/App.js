@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import DataStatsPanel from './DataStatsPanel';
 import DataTable from './DataTable';
 import FilteringForm from './FilteringForm';
-import UserProfile from './UserProfile';
 
 function App() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -13,9 +11,9 @@ function App() {
 
   return (
     <div>
-      <UserProfile />
+      {/* <UserProfile /> */}
       <FilteringForm onSearchTermChange={term => handleSearch(term)} />
-      <DataStatsPanel />
+      {/* <DataStatsPanel /> */}
       <DataTable searchTerm={searchTerm} />
     </div>
   );

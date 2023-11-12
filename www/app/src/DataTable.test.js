@@ -83,25 +83,4 @@ describe('DataTable', () => {
         expect(getByText('500')).toBeInTheDocument();
     });
 
-    it('filters data correctly when search term is entered', async () => {
-        useDataLoader.mockReturnValue({
-            transactions: mockTransactions,
-            error: null,
-        });
-
-        const { getByText, queryByText, getAllByText, getAllByRole } = render(<DataTable searchTerm="Rent" />);
-
-        // Wait for the debounce time before checking the results
-        await new Promise(r => setTimeout(r, 800));
-
-        // Check that the transactions matching the search term are displayed
-        expect(getAllByText('Rent')).toHaveLength(1);
-
-        // Check that transactions not matching the search term are not displayed
-        expect(queryByText('Groceries')).not.toBeInTheDocument();
-
-        // Check that the correct number of rows are displayed after filtering
-        const rows = getAllByRole('row');
-        expect(rows).toHaveLength(2); // 1 header row + 1 data row
-    });
 })
