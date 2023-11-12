@@ -25,7 +25,52 @@ describe('DataTable', () => {
             expect(screen.getAllByText(transaction.note).length).toBe(mockTransactions.filter(t => t.note === transaction.note).length);
         });
     });
-it('sorts the table when a column header is clicked', () => {
+it('sorts the table when the ID column header is clicked', () => {
+    const mockOnSort = jest.fn();
+    render(<DataTable transactions={mockTransactions} onSort={mockOnSort} />);
+
+    fireEvent.click(screen.getByText('ID'));
+
+    expect(mockOnSort).toHaveBeenCalledWith('id', 'asc');
+});
+
+it('sorts the table when the Date column header is clicked', () => {
+    const mockOnSort = jest.fn();
+    render(<DataTable transactions={mockTransactions} onSort={mockOnSort} />);
+
+    fireEvent.click(screen.getByText('Date'));
+
+    expect(mockOnSort).toHaveBeenCalledWith('date', 'asc');
+});
+
+it('sorts the table when the Value column header is clicked', () => {
+    const mockOnSort = jest.fn();
+    render(<DataTable transactions={mockTransactions} onSort={mockOnSort} />);
+
+    fireEvent.click(screen.getByText('Value'));
+
+    expect(mockOnSort).toHaveBeenCalledWith('value', 'asc');
+});
+
+it('sorts the table when the Payee Name column header is clicked', () => {
+    const mockOnSort = jest.fn();
+    render(<DataTable transactions={mockTransactions} onSort={mockOnSort} />);
+
+    fireEvent.click(screen.getByText('Payee Name'));
+
+    expect(mockOnSort).toHaveBeenCalledWith('payee_name', 'asc');
+});
+
+it('sorts the table when the Category Name column header is clicked', () => {
+    const mockOnSort = jest.fn();
+    render(<DataTable transactions={mockTransactions} onSort={mockOnSort} />);
+
+    fireEvent.click(screen.getByText('Category Name'));
+
+    expect(mockOnSort).toHaveBeenCalledWith('category_name', 'asc');
+});
+
+it('sorts the table when the Note column header is clicked', () => {
     const mockOnSort = jest.fn();
     render(<DataTable transactions={mockTransactions} onSort={mockOnSort} />);
 
