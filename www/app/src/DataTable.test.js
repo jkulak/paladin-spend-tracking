@@ -82,4 +82,22 @@ describe('DataTable', () => {
         // Check that the first row has the largest value
         expect(getByText('500')).toBeInTheDocument();
     });
+
+    it('filters data correctly when search term is entered', async () => {
+        useDataLoader.mockReturnValue({
+            transactions: mockTransactions,
+            error: null,
+        });
+
+        const { getByText, queryByText } = render(<DataTable searchTerm="Rent" />);
+
+        // Wait for the debounce time before checking the results
+        await new Promise(r => setTimeout(r, 800));
+
+        // Check that the transactions matching the search term are displayed
+        expect(getByText('Rent')).toBeInTheDocument();
+
+        // Check that transactions not matching the search term are not displayed
+        expect(queryByText('Groceries')).not.toBeInTheDocument();
+    });
 })
