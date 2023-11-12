@@ -19,3 +19,8 @@
     color: black;
     cursor: pointer; /* Add this line to change the cursor to a pointer */
 }
+.tag {
+    background-color: #f2f2f2; /* pastel color */
+    border-radius: 5px; /* rounded corners */
+    padding: 2px 5px; /* some padding */
+}

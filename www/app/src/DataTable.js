@@ -34,7 +34,7 @@ const DataTable = ({ transactions, onSort }) => {
                             <td>{transaction.value}</td>
                             <td>{transaction.payee_name}</td>
                             <td>{transaction.category_name}</td>
-                            <td>{transaction.note}</td>
+                            <td>{highlightTags(transaction.note)}</td>
                         </tr>
                     ))}
                 </tbody>
@@ -44,3 +44,10 @@ const DataTable = ({ transactions, onSort }) => {
 };
 
 export default DataTable;
+function highlightTags(note) {
+    return note.split(' ').map((word, index) => 
+        word.startsWith('#') ? 
+            <span key={index} className="tag">{word}</span> : 
+            word
+    ).join(' ');
+}
