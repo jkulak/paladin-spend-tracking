@@ -75,7 +75,7 @@ describe('DataTable', () => {
         const mockOnSort = jest.fn();
         render(<DataTable transactions={mockTransactions} onSort={mockOnSort} />);
 
-        fireEvent.click(screen.getByText('Note'));
+        fireEvent.click(screen.getByTestId('noteHeader'));
         expect(mockOnSort).toHaveBeenCalledWith('note', 'asc');
 
         fireEvent.click(screen.getByText('Note'));
