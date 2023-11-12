@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './DataTable.css';
 
-const DataTable = ({ transactions, onSort }) => {
+const DataTable = ({ transactions, onSort, onTagClick }) => {
     const [sortColumn, setSortColumn] = useState(null);
     const [sortDirection, setSortDirection] = useState('asc');
 
@@ -47,7 +47,7 @@ export default DataTable;
 function highlightTags(note) {
     return note.split(/(#\w+)/g).map((word, index) => {
         if (word.startsWith('#')) {
-            return <span key={index} className="tag">{word}</span>;
+            return <span key={index} className="tag" onClick={() => onTagClick(word)}>{word}</span>;
         } else {
             return word;
         }

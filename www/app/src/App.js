@@ -25,7 +25,7 @@ function App() {
       {/* <UserProfile /> */}
       <FilteringForm onSearchTermChange={term => handleSearch(term)} />
       {/* <DataStatsPanel /> */}
-      <DataTable transactions={transactions} onSort={handleSort} />
+      <DataTable transactions={transactions} onSort={handleSort} onTagClick={handleSearch} />
     </div>
   );
 }
