@@ -34,6 +34,7 @@ const DataTable = ({ transactions, onSort, onTagClick }) => {
                         <th id="payeeNameHeader" onClick={() => handleHeaderClick('payee_name')}>Payee Name {sortColumn === 'payee_name' ? (sortDirection === 'asc' ? '▲' : '▼') : ''}</th>
                         <th id="categoryNameHeader" onClick={() => handleHeaderClick('category_name')}>Category Name {sortColumn === 'category_name' ? (sortDirection === 'asc' ? '▲' : '▼') : ''}</th>
                         <th id="noteHeader" onClick={() => handleHeaderClick('note')}>Note {sortColumn === 'note' ? (sortDirection === 'asc' ? '▲' : '▼') : ''}</th>
+                        <th id="labelsHeader" onClick={() => handleHeaderClick('labels')}>Labels {sortColumn === 'labels' ? (sortDirection === 'asc' ? '▲' : '▼') : ''}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -45,6 +46,7 @@ const DataTable = ({ transactions, onSort, onTagClick }) => {
                             <td>{transaction.payee_name}</td>
                             <td>{transaction.category_name}</td>
                             <td>{highlightTags(transaction.note, onTagClick)}</td>
+                            <td>{transaction.note.split(/(#\w+)/g).filter(word => word.startsWith('#')).join(', ')}</td>
                         </tr>
                     ))}
                 </tbody>
