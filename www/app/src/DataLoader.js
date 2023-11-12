@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { API_URL } from './constants';
 
-const useDataLoader = (searchTerm, setTransactions) => {
+const useDataLoader = (searchTerm, setTransactions, sortColumn, sortDirection) => {
     const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(searchTerm);
 
     const debounce = (func, wait) => {
@@ -27,12 +27,13 @@ const useDataLoader = (searchTerm, setTransactions) => {
 
     useEffect(() => {
         const searchQuery = debouncedSearchTerm ? `?note=ilike.*${encodeURIComponent(debouncedSearchTerm)}*` : '';
+        const sortQuery = sortColumn ? `&order=${sortColumn}.${sortDirection}` : '';
 
-        fetch(`${API_URL}${searchQuery}`)
+        fetch(`${API_URL}${searchQuery}${sortQuery}`)
             .then(response => response.json())
             .then(data => setTransactions(Array.isArray(data) ? data : []))
             .catch(error => console.error('Error fetching data: ', error));
-    }, [debouncedSearchTerm]);
+    }, [debouncedSearchTerm, sortColumn, sortDirection]);
 
 };
 
