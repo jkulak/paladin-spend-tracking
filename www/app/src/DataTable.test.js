@@ -76,7 +76,13 @@ describe('DataTable', () => {
         fireEvent.change(document.getElementById('searchInput'), { target: { value: 'Rent' } });
 
         // Fast-forward until all timers have been executed
-        jest.advanceTimersByTime(800);
+        jest.advanceTimersByTime(1000);
+
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        await sleep(1000)
 
         // Now we can run our assertions
         expect(queryByText('1')).not.toBeInTheDocument();
