@@ -12,6 +12,16 @@ const DataTable = ({ transactions, onSort, onTagClick }) => {
         onSort(column, newDirection);
     };
 
+    function highlightTags(note, onTagClick) {
+        return note.split(/(#\w+)/g).map((word, index) => {
+            if (word.startsWith('#')) {
+                return <span key={index} className="tag" onClick={() => onTagClick(word)}>{word}</span>;
+            } else {
+                return word;
+            }
+        });
+    }    
+
     return (
         <div className="DataTable">
             <h2>Data Table</h2>
@@ -31,7 +41,7 @@ const DataTable = ({ transactions, onSort, onTagClick }) => {
                         <tr key={transaction.id}>
                             <td>{transaction.id}</td>
                             <td>{transaction.date}</td>
-                            <td className={transaction.value >= 0 ? 'positiveValue' : 'negativeValue'}>{transaction.value}</td>
+                            <td><span className={transaction.value >= 0 ? 'positiveValue' : 'negativeValue'}>{transaction.value}</span></td>
                             <td>{transaction.payee_name}</td>
                             <td>{transaction.category_name}</td>
                             <td>{highlightTags(transaction.note, onTagClick)}</td>
@@ -44,12 +54,3 @@ const DataTable = ({ transactions, onSort, onTagClick }) => {
 };
 
 export default DataTable;
-function highlightTags(note, onTagClick) {
-    return note.split(/(#\w+)/g).map((word, index) => {
-        if (word.startsWith('#')) {
-            return <span key={index} className="tag" onClick={() => onTagClick(word)}>{word}</span>;
-        } else {
-            return word;
-        }
-    });
-}
