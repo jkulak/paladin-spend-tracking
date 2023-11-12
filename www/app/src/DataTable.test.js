@@ -1,6 +1,7 @@
 import '@testing-library/jest-dom';
 import { fireEvent, render, screen } from '@testing-library/react';
 import React from 'react';
+import { act } from 'react-dom/test-utils';
 import DataTable from './DataTable';
 
 describe('DataTable', () => {
@@ -85,7 +86,7 @@ describe('DataTable', () => {
         expect(mockOnSort).toHaveBeenCalledWith('note', 'asc');
     });
 
-    import { act } from 'react-dom/test-utils';
+    
 
     it('checks if the data is properly sorted when the Note column header is clicked', () => {
         let transactions = [...mockTransactions];
