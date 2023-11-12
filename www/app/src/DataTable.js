@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './DataTable.css';
 
-const DataTable = ({ transactions }) => {
+const DataTable = ({ transactions, onSort }) => {
     const [sortColumn, setSortColumn] = useState(null);
     const [sortDirection, setSortDirection] = useState('asc');
 
