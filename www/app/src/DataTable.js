@@ -47,7 +47,7 @@ export default DataTable;
 function highlightTags(note, onTagClick) {
     return note.split(/(#\w+)/g).map((word, index) => {
         if (word.startsWith('#')) {
-            return <span key={index} className="tag" onClick={() => onTagClick(word.slice(1))}>{word}</span>;
+            return <span key={index} className="tag" onClick={() => onTagClick(word)}>{word}</span>;
         } else {
             return word;
         }

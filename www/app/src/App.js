@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
+import { useDataLoader } from './DataLoader';
 import DataTable from './DataTable';
 import FilteringForm from './FilteringForm';
-import { useDataLoader } from './DataLoader';
 
 function App() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -24,10 +24,12 @@ function App() {
 
   return (
     <div>
-      {/* <UserProfile /> */}
-      <FilteringForm onSearchTermChange={term => handleSearch(term)} searchTerm={inputSearchTerm} />
-      {/* <DataStatsPanel /> */}
-      <DataTable transactions={transactions} onSort={handleSort} onTagClick={handleSearch} />
+        <div class="container">
+            {/* <UserProfile /> */}
+            <FilteringForm onSearchTermChange={term => handleSearch(term)} searchTerm={inputSearchTerm} />
+            {/* <DataStatsPanel /> */}
+            <DataTable transactions={transactions} onSort={handleSort} onTagClick={handleSearch} />
+        </div>
     </div>
   );
 }
