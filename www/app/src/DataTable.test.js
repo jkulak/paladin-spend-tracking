@@ -89,7 +89,7 @@ describe('DataTable', () => {
             error: null,
         });
 
-        const { getByText, queryByText, getAllByText } = render(<DataTable searchTerm="Rent" />);
+        const { getByText, queryByText, getAllByText, getAllByRole } = render(<DataTable searchTerm="Rent" />);
 
         // Wait for the debounce time before checking the results
         await new Promise(r => setTimeout(r, 800));
@@ -99,5 +99,9 @@ describe('DataTable', () => {
 
         // Check that transactions not matching the search term are not displayed
         expect(queryByText('Groceries')).not.toBeInTheDocument();
+
+        // Check that the correct number of rows are displayed after filtering
+        const rows = getAllByRole('row');
+        expect(rows).toHaveLength(2); // 1 header row + 1 data row
     });
 })
