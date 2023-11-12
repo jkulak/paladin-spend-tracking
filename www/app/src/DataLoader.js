@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+import { API_URL } from './constants';
 
 const useDataLoader = (searchTerm, sortColumn, sortDirection, maxResults) => {
     const [transactions, setTransactions] = useState([]);
@@ -29,7 +30,7 @@ const useDataLoader = (searchTerm, sortColumn, sortDirection, maxResults) => {
     useEffect(() => {
         const sortQuery = sortColumn ? `order=${sortColumn}.${sortDirection}` : '';
         const searchQuery = searchTerm ? `&note=ilike.*${encodeURIComponent(searchTerm)}*` : '';
-import { API_URL } from './constants';
+
 
         fetch(`${API_URL}?${sortQuery}${searchQuery}&limit=${maxResults}`)
             .then(response => response.json())
