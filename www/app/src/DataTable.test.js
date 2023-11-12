@@ -76,7 +76,9 @@ describe('DataTable', () => {
         render(<DataTable transactions={mockTransactions} onSort={mockOnSort} />);
 
         fireEvent.click(screen.getByText('Note'));
-
         expect(mockOnSort).toHaveBeenCalledWith('note', 'asc');
+
+        fireEvent.click(screen.getByText('Note'));
+        expect(mockOnSort).toHaveBeenCalledWith('note', 'desc');
     });
 });
