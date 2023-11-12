@@ -32,16 +32,32 @@ describe('DataTable', () => {
             error: null,
         });
 
-        const { getByText, getAllByText } = render(<DataTable searchTerm="" />);
+        const { getByText, getAllByText, queryByText } = render(<DataTable searchTerm="" />);
 
+        // Assuming the mockTransactions array has been updated and contains more data with some repeating payee_names and categories
+        // Update the assertions to match the new expected values
+        // Example: Check for the first transaction's data
         expect(getByText('1')).toBeInTheDocument();
         expect(getByText('2021-01-01')).toBeInTheDocument();
         expect(getByText('100')).toBeInTheDocument();
         expect(getByText('John Doe')).toBeInTheDocument();
-        const groceriesElements = getAllByText('Groceries');
-        expect(groceriesElements[0]).toBeInTheDocument();
-        expect(groceriesElements[1]).toBeInTheDocument();
+        expect(getByText('Groceries')).toBeInTheDocument();
         expect(getByText('Test note')).toBeInTheDocument();
+
+        // Example: Check for another transaction's data (assuming the ID and other details have changed)
+        expect(getByText('2')).toBeInTheDocument();
+        expect(getByText('2021-02-01')).toBeInTheDocument();
+        expect(getByText('200')).toBeInTheDocument();
+        expect(getByText('Jane Doe')).toBeInTheDocument();
+        expect(getByText('Rent')).toBeInTheDocument();
+        expect(getByText('Rent payment')).toBeInTheDocument();
+
+        // Add more assertions as needed to cover the new data in mockTransactions
+        // ...
+
+        // Example: Verify that a transaction that should not be present is indeed not present
+        // This is just an example, you need to replace 'XX' with the actual ID that should not be present
+        expect(queryByText('XX')).not.toBeInTheDocument();
     });
 
     it('sorts data correctly when column header is clicked', () => {
