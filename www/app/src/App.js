@@ -24,7 +24,8 @@ function App() {
 
   return (
     <div>
-        <div class="container">
+        <div className="container">
+            <h1>Pocket expense browser</h1>
             {/* <UserProfile /> */}
             <FilteringForm onSearchTermChange={term => handleSearch(term)} searchTerm={inputSearchTerm} />
             {/* <DataStatsPanel /> */}
