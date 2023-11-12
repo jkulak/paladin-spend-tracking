@@ -31,7 +31,7 @@ const DataTable = ({ transactions, onSort, onTagClick }) => {
                         <tr key={transaction.id}>
                             <td>{transaction.id}</td>
                             <td>{transaction.date}</td>
-                            <td>{transaction.value}</td>
+                            <td className={transaction.value >= 0 ? 'positiveValue' : 'negativeValue'}>{transaction.value}</td>
                             <td>{transaction.payee_name}</td>
                             <td>{transaction.category_name}</td>
                             <td>{highlightTags(transaction.note, onTagClick)}</td>
