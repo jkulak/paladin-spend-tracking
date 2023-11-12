@@ -1,12 +1,13 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { useDataLoader } from './DataLoader';
+import { mockTransactions } from './mockTransactions';
 
 describe('useDataLoader', () => {
     it('should fetch data when called', async () => {
         // Mock fetch and its response
         global.fetch = jest.fn(() =>
             Promise.resolve({
-                json: () => Promise.resolve([{ id: 1, note: 'Test note' }]),
+                json: () => Promise.resolve(mockTransactions),
             })
         );
 
