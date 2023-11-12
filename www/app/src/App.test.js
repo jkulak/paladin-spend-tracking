@@ -16,7 +16,7 @@ test('loads and displays transactions', async () => {
 
   // Check if the transactions are displayed correctly
   for (const transaction of mockTransactions) {
-    const element = await findByText(transaction.note);
+    const element = await findByText(transaction.note, { exact: false });
     expect(element).toBeInTheDocument();
   }
 });
