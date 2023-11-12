@@ -26,17 +26,14 @@ const useDataLoader = (searchTerm, setTransactions) => {
     }, [searchTerm, debouncedApiCall]);
 
     useEffect(() => {
-        const sortQuery = sortColumn ? `order=${sortColumn}.${sortDirection}` : '';
-        const searchQuery = searchTerm ? `&note=ilike.*${encodeURIComponent(searchTerm)}*` : '';
+        const searchQuery = debouncedSearchTerm ? `?note=ilike.*${encodeURIComponent(debouncedSearchTerm)}*` : '';
 
-
-        fetch(`${API_URL}?${sortQuery}${searchQuery}&limit=${maxResults}`)
+        fetch(`${API_URL}${searchQuery}`)
             .then(response => response.json())
             .then(data => setTransactions(Array.isArray(data) ? data : []))
-            .catch(error => setError('Error fetching data: ', error));
-    }, [debouncedSearchTerm, sortColumn, sortDirection]);
+            .catch(error => console.error('Error fetching data: ', error));
+    }, [debouncedSearchTerm]);
 
-    return { transactions, error };
 };
 
 export { useDataLoader };
