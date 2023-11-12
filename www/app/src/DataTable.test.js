@@ -63,23 +63,29 @@ describe('DataTable', () => {
         expect(getByText('500')).toBeInTheDocument();
     });
 
-    it('triggers data reload and loads proper data when text is added in filter form input field', () => {
+    it('triggers data reload and loads proper data when text is added in filter form input field', async () => {
+        jest.useFakeTimers();
         useDataLoader.mockReturnValue({
-            transactions: mockTransactions.filter(transaction => transaction.note.includes('Rent')),
+            transactions: mockTransactions,
             error: null,
         });
 
-        const { getByText } = render(<App />);
+        const { getByText, queryByText } = render(<App />);
 
         // Add text in the filter form input field
         fireEvent.change(document.getElementById('searchInput'), { target: { value: 'Rent' } });
 
-        // Check that the table has reloaded and displays the correct data
+        // Fast-forward until all timers have been executed
+        jest.advanceTimersByTime(800);
+
+        // Now we can run our assertions
+        expect(queryByText('1')).not.toBeInTheDocument();
         expect(getByText('2')).toBeInTheDocument();
         expect(getByText('2021-02-01')).toBeInTheDocument();
         expect(getByText('200')).toBeInTheDocument();
         expect(getByText('Jane Doe')).toBeInTheDocument();
         expect(getByText('Rent')).toBeInTheDocument();
         expect(getByText('Rent payment')).toBeInTheDocument();
+        jest.useRealTimers();
     });
 });
