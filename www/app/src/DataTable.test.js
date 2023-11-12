@@ -1,6 +1,6 @@
-import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
+import { fireEvent, render, screen } from '@testing-library/react';
+import React from 'react';
 import DataTable from './DataTable';
 
 describe('DataTable', () => {
@@ -25,57 +25,58 @@ describe('DataTable', () => {
             expect(screen.getAllByText(transaction.note).length).toBe(mockTransactions.filter(t => t.note === transaction.note).length);
         });
     });
-it('sorts the table when the ID column header is clicked', () => {
-    const mockOnSort = jest.fn();
-    render(<DataTable transactions={mockTransactions} onSort={mockOnSort} />);
+    
+    it('sorts the table when the ID column header is clicked', () => {
+        const mockOnSort = jest.fn();
+        render(<DataTable transactions={mockTransactions} onSort={mockOnSort} />);
 
-    fireEvent.click(screen.getByText('ID'));
+        fireEvent.click(screen.getByText('ID'));
 
-    expect(mockOnSort).toHaveBeenCalledWith('id', 'asc');
-});
+        expect(mockOnSort).toHaveBeenCalledWith('id', 'asc');
+    });
 
-it('sorts the table when the Date column header is clicked', () => {
-    const mockOnSort = jest.fn();
-    render(<DataTable transactions={mockTransactions} onSort={mockOnSort} />);
+    it('sorts the table when the Date column header is clicked', () => {
+        const mockOnSort = jest.fn();
+        render(<DataTable transactions={mockTransactions} onSort={mockOnSort} />);
 
-    fireEvent.click(screen.getByText('Date'));
+        fireEvent.click(screen.getByText('Date'));
 
-    expect(mockOnSort).toHaveBeenCalledWith('date', 'asc');
-});
+        expect(mockOnSort).toHaveBeenCalledWith('date', 'asc');
+    });
 
-it('sorts the table when the Value column header is clicked', () => {
-    const mockOnSort = jest.fn();
-    render(<DataTable transactions={mockTransactions} onSort={mockOnSort} />);
+    it('sorts the table when the Value column header is clicked', () => {
+        const mockOnSort = jest.fn();
+        render(<DataTable transactions={mockTransactions} onSort={mockOnSort} />);
 
-    fireEvent.click(screen.getByText('Value'));
+        fireEvent.click(screen.getByText('Value'));
 
-    expect(mockOnSort).toHaveBeenCalledWith('value', 'asc');
-});
+        expect(mockOnSort).toHaveBeenCalledWith('value', 'asc');
+    });
 
-it('sorts the table when the Payee Name column header is clicked', () => {
-    const mockOnSort = jest.fn();
-    render(<DataTable transactions={mockTransactions} onSort={mockOnSort} />);
+    it('sorts the table when the Payee Name column header is clicked', () => {
+        const mockOnSort = jest.fn();
+        render(<DataTable transactions={mockTransactions} onSort={mockOnSort} />);
 
-    fireEvent.click(screen.getByText('Payee Name'));
+        fireEvent.click(screen.getByText('Payee Name'));
 
-    expect(mockOnSort).toHaveBeenCalledWith('payee_name', 'asc');
-});
+        expect(mockOnSort).toHaveBeenCalledWith('payee_name', 'asc');
+    });
 
-it('sorts the table when the Category Name column header is clicked', () => {
-    const mockOnSort = jest.fn();
-    render(<DataTable transactions={mockTransactions} onSort={mockOnSort} />);
+    it('sorts the table when the Category Name column header is clicked', () => {
+        const mockOnSort = jest.fn();
+        render(<DataTable transactions={mockTransactions} onSort={mockOnSort} />);
 
-    fireEvent.click(screen.getByText('Category Name'));
+        fireEvent.click(screen.getByText('Category Name'));
 
-    expect(mockOnSort).toHaveBeenCalledWith('category_name', 'asc');
-});
+        expect(mockOnSort).toHaveBeenCalledWith('category_name', 'asc');
+    });
 
-it('sorts the table when the Note column header is clicked', () => {
-    const mockOnSort = jest.fn();
-    render(<DataTable transactions={mockTransactions} onSort={mockOnSort} />);
+    it('sorts the table when the Note column header is clicked', () => {
+        const mockOnSort = jest.fn();
+        render(<DataTable transactions={mockTransactions} onSort={mockOnSort} />);
 
-    fireEvent.click(screen.getByText('Note'));
+        fireEvent.click(screen.getByText('Note'));
 
-    expect(mockOnSort).toHaveBeenCalledWith('note', 'asc');
-});
+        expect(mockOnSort).toHaveBeenCalledWith('note', 'asc');
+    });
 });
