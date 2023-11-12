@@ -6,8 +6,10 @@ const DataTable = ({ transactions }) => {
     const [sortDirection, setSortDirection] = useState('asc');
 
     const handleHeaderClick = (column) => {
-        setSortDirection(sortColumn === column && sortDirection === 'asc' ? 'desc' : 'asc');
+        const newDirection = sortColumn === column && sortDirection === 'asc' ? 'desc' : 'asc';
+        setSortDirection(newDirection);
         setSortColumn(column);
+        props.onSort(column, newDirection);
     };
 
     return (
