@@ -15,16 +15,16 @@ describe('DataTable', () => {
         { id: 4, date: '2021-04-01', value: 400, payee_name: 'Alice Johnson', category_name: 'Groceries', note: 'Grocery shopping' },
         { id: 5, date: '2021-05-01', value: 500, payee_name: 'Charlie Brown', category_name: 'Entertainment', note: 'Movie tickets' },
         // Additional mock transactions
-        { id: 6, date: '2021-06-01', value: 600, payee_name: 'Dave Wilson', category_name: 'Travel', note: 'Flight booking' },
-        { id: 7, date: '2021-07-01', value: 700, payee_name: 'Eva Green', category_name: 'Health', note: 'Gym membership' },
-        { id: 8, date: '2021-08-01', value: 800, payee_name: 'Frank Moore', category_name: 'Insurance', note: 'Car insurance' },
+        { id: 6, date: '2021-06-01', value: 600, payee_name: 'John Doe', category_name: 'Travel', note: 'Flight booking' },
+        { id: 7, date: '2021-07-01', value: 700, payee_name: 'Jane Doe', category_name: 'Health', note: 'Gym membership' },
+        { id: 8, date: '2021-08-01', value: 800, payee_name: 'John Doe', category_name: 'Insurance', note: 'Car insurance' },
         { id: 9, date: '2021-09-01', value: 900, payee_name: 'Grace Lee', category_name: 'Dining', note: 'Restaurant bill' },
         { id: 10, date: '2021-10-01', value: 1000, payee_name: 'Hank Zebrowski', category_name: 'Electronics', note: 'Laptop purchase' },
-        { id: 11, date: '2021-11-01', value: 1100, payee_name: 'Ivy Black', category_name: 'Clothing', note: 'Jacket and jeans' },
+        { id: 11, date: '2021-11-01', value: 1100, payee_name: 'Jane Doe', category_name: 'Clothing', note: 'Jacket and jeans' },
         { id: 12, date: '2021-12-01', value: 1200, payee_name: 'Jack White', category_name: 'Gifts', note: 'Birthday presents' },
         { id: 13, date: '2022-01-01', value: 1300, payee_name: 'Kara Thrace', category_name: 'Pets', note: 'Pet food' },
-        { id: 14, date: '2022-02-01', value: 1400, payee_name: 'Liam Neeson', category_name: 'Automotive', note: 'Car repair' },
-        { id: 15, date: '2022-03-01', value: 1500, payee_name: 'Mia Wallace', category_name: 'Beauty', note: 'Salon visit' },
+        { id: 14, date: '2022-02-01', value: 1400, payee_name: 'Grace Lee', category_name: 'Automotive', note: 'Car repair' },
+        { id: 15, date: '2022-03-01', value: 1500, payee_name: 'Mia Wallace', category_name: 'Health', note: 'Salon visit' },
     ];
 
     it('renders the correct data when transactions state changes', () => {
