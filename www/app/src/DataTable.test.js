@@ -84,4 +84,24 @@ describe('DataTable', () => {
         fireEvent.click(document.getElementById('noteHeader'));
         expect(mockOnSort).toHaveBeenCalledWith('note', 'asc');
     });
+
+    it('checks if the data is properly sorted when the Note column header is clicked', () => {
+        const mockOnSort = jest.fn();
+        render(<DataTable transactions={mockTransactions} onSort={mockOnSort} />);
+
+        fireEvent.click(document.getElementById('noteHeader'));
+        let rows = screen.getAllByRole('row');
+        expect(rows[1].cells[5]).toHaveTextContent('Electricity bill');
+        expect(rows[rows.length - 1].cells[5]).toHaveTextContent('Test note');
+
+        fireEvent.click(document.getElementById('noteHeader'));
+        rows = screen.getAllByRole('row');
+        expect(rows[1].cells[5]).toHaveTextContent('Test note');
+        expect(rows[rows.length - 1].cells[5]).toHaveTextContent('Electricity bill');
+
+        fireEvent.click(document.getElementById('noteHeader'));
+        rows = screen.getAllByRole('row');
+        expect(rows[1].cells[5]).toHaveTextContent('Electricity bill');
+        expect(rows[rows.length - 1].cells[5]).toHaveTextContent('Test note');
+    });
 });
