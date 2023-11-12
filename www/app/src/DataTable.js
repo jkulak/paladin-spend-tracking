@@ -9,7 +9,7 @@ const DataTable = ({ transactions, onSort }) => {
         const newDirection = sortColumn === column && sortDirection === 'asc' ? 'desc' : 'asc';
         setSortDirection(newDirection);
         setSortColumn(column);
-        props.onSort(column, newDirection);
+        onSort(column, newDirection);
     };
 
     return (
