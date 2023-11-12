@@ -71,14 +71,17 @@ describe('DataTable', () => {
         expect(mockOnSort).toHaveBeenCalledWith('category_name', 'asc');
     });
 
-    it('sorts the table when the Note column header is clicked', () => {
+    it('sorts the table when the Note column header is clicked 1, 2 and 3 times', () => {
         const mockOnSort = jest.fn();
         render(<DataTable transactions={mockTransactions} onSort={mockOnSort} />);
 
         fireEvent.click(document.getElementById('noteHeader'));
         expect(mockOnSort).toHaveBeenCalledWith('note', 'asc');
 
-        fireEvent.click(screen.getByText('Note'));
+        fireEvent.click(document.getElementById('noteHeader'));
         expect(mockOnSort).toHaveBeenCalledWith('note', 'desc');
+
+        fireEvent.click(document.getElementById('noteHeader'));
+        expect(mockOnSort).toHaveBeenCalledWith('note', 'asc');
     });
 });
