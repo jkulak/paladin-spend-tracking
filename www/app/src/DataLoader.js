@@ -1,28 +1,28 @@
 import { useCallback, useEffect, useState } from 'react';
-import { API_URL, DISPLAY_MAX } from './constants';
+import { API_URL, DEBOUNCE_TIME, DISPLAY_MAX } from './constants';
 
 const useDataLoader = (searchTerm, setTransactions, sortColumn, sortDirection) => {
     const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(searchTerm);
 
-    const debounce = (func, wait) => {
-        let timeout;
-        return function executedFunction(...args) {
-            const later = () => {
-                clearTimeout(timeout);
-                func(...args);
-            };
-            clearTimeout(timeout);
-            timeout = setTimeout(later, wait);
-        };
-    };
-
+    // Implement the debounce logic directly within useCallback
     const debouncedApiCall = useCallback(
-        debounce((nextValue) => setDebouncedSearchTerm(nextValue), 800),
-        [] // will be created only once initially
+        (nextValue) => {
+            const handler = setTimeout(() => {
+                setDebouncedSearchTerm(nextValue);
+            }, DEBOUNCE_TIME);
+
+            return () => {
+                clearTimeout(handler);
+            };
+        },
+        [setDebouncedSearchTerm] // Dependencies
     );
 
     useEffect(() => {
-        debouncedApiCall(searchTerm);
+        const debounceHandler = debouncedApiCall(searchTerm);
+        return () => {
+            if (debounceHandler) debounceHandler();
+        };
     }, [searchTerm, debouncedApiCall]);
 
     useEffect(() => {
@@ -30,13 +30,11 @@ const useDataLoader = (searchTerm, setTransactions, sortColumn, sortDirection) =
         const sortQuery = sortColumn ? `&order=${sortColumn}.${sortDirection}` : '';
         const finalQuery = searchQuery ? `${searchQuery}${sortQuery}` : `?${sortQuery.slice(1)}`;
 
-        
-
         fetch(`${API_URL}${finalQuery}&limit=${DISPLAY_MAX}`)
             .then(response => response.json())
             .then(data => setTransactions(Array.isArray(data) ? data : []))
             .catch(error => console.error('Error fetching data: ', error));
-    }, [debouncedSearchTerm, sortColumn, sortDirection]);
+    }, [setTransactions, debouncedSearchTerm, sortColumn, sortDirection]);
 
 };
 
