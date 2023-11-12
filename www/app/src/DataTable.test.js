@@ -17,12 +17,12 @@ describe('DataTable', () => {
         render(<DataTable transactions={mockTransactions} onSort={mockOnSort} />);
 
         mockTransactions.forEach(transaction => {
-            expect(screen.getByText(transaction.id)).toBeInTheDocument();
-            expect(screen.getByText(transaction.date)).toBeInTheDocument();
-            expect(screen.getByText(transaction.value)).toBeInTheDocument();
-            expect(screen.getByText(transaction.payee_name)).toBeInTheDocument();
-            expect(screen.getByText(transaction.category_name)).toBeInTheDocument();
-            expect(screen.getByText(transaction.note)).toBeInTheDocument();
+            expect(screen.getAllByText(transaction.id).length).toBe(mockTransactions.filter(t => t.id === transaction.id).length);
+            expect(screen.getAllByText(transaction.date).length).toBe(mockTransactions.filter(t => t.date === transaction.date).length);
+            expect(screen.getAllByText(transaction.value).length).toBe(mockTransactions.filter(t => t.value === transaction.value).length);
+            expect(screen.getAllByText(transaction.payee_name).length).toBe(mockTransactions.filter(t => t.payee_name === transaction.payee_name).length);
+            expect(screen.getAllByText(transaction.category_name).length).toBe(mockTransactions.filter(t => t.category_name === transaction.category_name).length);
+            expect(screen.getAllByText(transaction.note).length).toBe(mockTransactions.filter(t => t.note === transaction.note).length);
         });
     });
 });
