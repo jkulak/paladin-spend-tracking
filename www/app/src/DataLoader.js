@@ -29,7 +29,9 @@ const useDataLoader = (searchTerm, sortColumn, sortDirection, maxResults) => {
     useEffect(() => {
         const sortQuery = sortColumn ? `order=${sortColumn}.${sortDirection}` : '';
         const searchQuery = searchTerm ? `&note=ilike.*${encodeURIComponent(searchTerm)}*` : '';
-        fetch(`http://localhost:3000/transaction_view?${sortQuery}${searchQuery}&limit=${maxResults}`)
+import { API_URL } from './constants';
+
+        fetch(`${API_URL}?${sortQuery}${searchQuery}&limit=${maxResults}`)
             .then(response => response.json())
             .then(data => setTransactions(Array.isArray(data) ? data : []))
             .catch(error => setError('Error fetching data: ', error));
