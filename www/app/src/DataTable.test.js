@@ -85,21 +85,42 @@ describe('DataTable', () => {
         expect(mockOnSort).toHaveBeenCalledWith('note', 'asc');
     });
 
-    it('checks if the data is properly sorted when the Note column header is clicked', () => {
-        const mockOnSort = jest.fn();
-        render(<DataTable transactions={mockTransactions} onSort={mockOnSort} />);
+    import { act } from 'react-dom/test-utils';
 
-        fireEvent.click(document.getElementById('noteHeader'));
+    it('checks if the data is properly sorted when the Note column header is clicked', () => {
+        let transactions = [...mockTransactions];
+        const handleSort = (column, direction) => {
+            transactions = transactions.sort((a, b) => {
+                if (a[column] < b[column]) {
+                    return direction === 'asc' ? -1 : 1;
+                }
+                if (a[column] > b[column]) {
+                    return direction === 'asc' ? 1 : -1;
+                }
+                return 0;
+            });
+        };
+        act(() => {
+            render(<DataTable transactions={transactions} onSort={handleSort} />);
+        });
+
+        act(() => {
+            fireEvent.click(document.getElementById('noteHeader'));
+        });
         let rows = screen.getAllByRole('row');
         expect(rows[1].cells[5]).toHaveTextContent('Electricity bill');
         expect(rows[rows.length - 1].cells[5]).toHaveTextContent('Test note');
 
-        fireEvent.click(document.getElementById('noteHeader'));
+        act(() => {
+            fireEvent.click(document.getElementById('noteHeader'));
+        });
         rows = screen.getAllByRole('row');
         expect(rows[1].cells[5]).toHaveTextContent('Test note');
         expect(rows[rows.length - 1].cells[5]).toHaveTextContent('Electricity bill');
 
-        fireEvent.click(document.getElementById('noteHeader'));
+        act(() => {
+            fireEvent.click(document.getElementById('noteHeader'));
+        });
         rows = screen.getAllByRole('row');
         expect(rows[1].cells[5]).toHaveTextContent('Electricity bill');
         expect(rows[rows.length - 1].cells[5]).toHaveTextContent('Test note');
