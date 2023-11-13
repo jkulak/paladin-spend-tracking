@@ -13,6 +13,8 @@ function App() {
 
   useDataLoader(searchTerm, setTransactions, sortColumn, sortDirection);
 
+  const totalValue = transactions.reduce((total, transaction) => total + transaction.value, 0);
+
   const handleSort = (column, direction) => {
     setSortColumn(column);
     setSortDirection(direction);
@@ -29,7 +31,7 @@ function App() {
             <h1>Pocket expense browser</h1>
             {/* <UserProfile /> */}
             <FilteringForm onSearchTermChange={term => handleSearch(term)} searchTerm={inputSearchTerm} />
-            <DataStatsPanel />
+            <DataStatsPanel totalValue={totalValue} />
             <DataTable transactions={transactions} onSort={handleSort} onTagClick={handleSearch} />
         </div>
     </div>
