@@ -1,26 +1,19 @@
-"""
-This module imports data from Pocker Expense csv export file
-and saves it into database.
-"""
-from datetime import datetime
+"""Imports data from Pocker Expense csv export file and saves it into database."""
 import os
 import re
 import sys
+from datetime import datetime
+from typing import List
 
 from dotenv import load_dotenv
 from sqlalchemy import create_engine
-from sqlalchemy.orm import Session
 from sqlalchemy.orm import sessionmaker
 
-from csv_tools import import_csv
-from csv_tools import prepare_csv_file
-from models import Category
-from models import Label
-from models import Payee
-from models import Transaction
+from csv_tools import import_csv, prepare_csv_file
+from models import Category, Label, Payee, Transaction
 
 CSV_DATA_DIR = "data"
-CSV_DATA_FILE = "PocketExpense_data_20230907.csv"
+CSV_DATA_FILE = "PocketExpense_data_20231113.csv"
 
 load_dotenv()
 
@@ -29,7 +22,6 @@ DATABASE_URL = os.getenv("DB_URL")
 
 def extract_date(date):
     """Extract date from string."""
-
     # Check and replace '00' with '12' when it's close to 'AM'
     date = re.sub(r"00:(\d{2} [APM]{2})", r"12:\1", date)
 
@@ -37,9 +29,7 @@ def extract_date(date):
 
 
 def extract_value(value):
-    """
-    Extract value from string.
-    """
+    """Extract value from string."""
     amount_str = (
         value.replace("zł", "").replace(",", ".").replace("\xa0", "").strip()
     )  # Replace non-breaking space with a regular space.
@@ -48,10 +38,10 @@ def extract_value(value):
     return value
 
 
-def extract_labels(note):
-    """
-    Extract labels from note. A note might have several labels.
-    Labels are hashtags in the note.
+def extract_labels(note: str) -> List[str]:
+    """Extract labels from note.
+
+    A note might have several labels. Labels are hashtags in the note.
     """
     labels = []
 
@@ -64,7 +54,6 @@ def extract_labels(note):
 
 def process_row(row, session):
     """Save data to the database"""
-
     transaction = {
         "date": extract_date(row["Date"]),
         "category": row["Category"],
@@ -75,25 +64,22 @@ def process_row(row, session):
     }
 
     # Check if the payee exists or not
-    payee = (
-        session.query(Payee).filter(Payee.name == transaction["payee"]).first()
-    )
+    payee = session.query(Payee).filter(Payee.name == transaction["payee"]).first()
     if not payee:
         payee = Payee(name=transaction["payee"])
         session.add(payee)
         session.commit()
 
     # Check if the category exists or not
-    category = (session.query(Category)
-        .filter(Category.name == transaction["category"])
-        .first()
+    category = (
+        session.query(Category).filter(Category.name == transaction["category"]).first()
     )
     if not category:
         category = Category(name=transaction["category"])
         session.add(category)
         session.commit()
 
-     # Create or check Labels
+    # Create or check Labels
     labels = []
     for label_name in transaction["labels"]:
         label = session.query(Label).filter_by(name=label_name).first()
@@ -110,7 +96,7 @@ def process_row(row, session):
         note=transaction["note"],
         category=category,
         payee=payee,
-        labels=labels
+        labels=labels,
     )
     session.add(transaction)
     session.commit()
@@ -118,7 +104,6 @@ def process_row(row, session):
 
 def main():
     """Main function."""
-
     base_file_path = os.path.join(CSV_DATA_DIR, CSV_DATA_FILE)
     cleaned_file_path = os.path.join(CSV_DATA_DIR, f"cleaned_{CSV_DATA_FILE}")
 

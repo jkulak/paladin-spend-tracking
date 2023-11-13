@@ -18,6 +18,14 @@ Then open
 1. On first run install dependencies: `yarn` (they are installed in the container, but you are overwriting the dev directory with local code)
 1. Run the app: `yarn start`
 
+## Import data
+
+* Open code in devcontainer
+* In `main.py` update the `CSV_DATA_FILE` with newest value
+* In terminal, run: `python src/main.pl`
+
+This will import the data from CSV file into the database.
+
 ## Work with Alembic
 
 ```sh
