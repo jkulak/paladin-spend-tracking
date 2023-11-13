@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDataLoader } from './DataLoader';
+import DataStatsPanel from './DataStatsPanel';
 import DataTable from './DataTable';
 import FilteringForm from './FilteringForm';
 
@@ -28,7 +29,7 @@ function App() {
             <h1>Pocket expense browser</h1>
             {/* <UserProfile /> */}
             <FilteringForm onSearchTermChange={term => handleSearch(term)} searchTerm={inputSearchTerm} />
-            {/* <DataStatsPanel /> */}
+            <DataStatsPanel />
             <DataTable transactions={transactions} onSort={handleSort} onTagClick={handleSearch} />
         </div>
     </div>
