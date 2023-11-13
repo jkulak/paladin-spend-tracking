@@ -46,7 +46,7 @@ const DataTable = ({ transactions, onSort, onTagClick }) => {
                             <td>{transaction.payee_name}</td>
                             <td>{transaction.category_name}</td>
                             <td>{highlightTags(transaction.note, onTagClick)}</td>
-                            <td>{transaction.note.split(/(#\w+)/g).filter(word => word.startsWith('#')).join(', ')}</td>
+                            <td>{transaction.labels.join(', ')}</td>
                         </tr>
                     ))}
                 </tbody>
