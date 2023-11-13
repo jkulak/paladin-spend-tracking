@@ -13,7 +13,7 @@ function App() {
 
   useDataLoader(searchTerm, setTransactions, sortColumn, sortDirection);
 
-  const totalValue = transactions.reduce((total, transaction) => total + transaction.value, 0);
+  const totalValue = Math.floor(transactions.reduce((total, transaction) => total + transaction.value, 0));
 
   const handleSort = (column, direction) => {
     setSortColumn(column);
