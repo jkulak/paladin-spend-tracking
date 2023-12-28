@@ -1,16 +1,20 @@
 ## Run locally
 
-1. Create Docker network: `docker network create paladin_network`
-1. Run Postgres container: `docker run -d --network paladin_network --env-file .env --name paladindb -v $(pwd)/pg_data:/pgdata -v $(pwd)/pg_backup:/pg_backup postgres:15.4-alpine3.18`
-1. Run Adminer container: `docker run -d --network paladin_network --env-file .env -p 8080:8080 --name paladin-adminer adminer:latest`
-1. Run postgrest (API) container: `docker run -d --network paladin_network --env-file .env -p 3000:3000 --name paladin-postgrest postgrest/postgrest:v11.2.0`
+1. Create Docker network:
+`docker network create paladin_network`
+1. Run Postgres container:
+`docker run -d --network paladin_network --env-file .env --name paladindb -v $(pwd)/pg_data:/pgdata -v $(pwd)/pg_backup:/pg_backup postgres:15.4-alpine3.18`
+1. Run Adminer container:
+`docker run -d --network paladin_network --env-file .env -p 8080:8080 --name paladin-adminer adminer:latest`
+1. Run postgrest (API) container:
+`docker run -d --network paladin_network --env-file .env -p 3000:3000 --name paladin-postgrest postgrest/postgrest:v11.2.0`
 
 Then open 
 
 1. Postgrest: http://localhost:3000/transactions and http://localhost:3000/transaction_view and http://localhost:3000/transactions_view_materialized
-1. Adminer: http://localhost:8080/?pgsql=paladin-db&username=postgres&db=paladin&ns=public
+1. Adminer: http://localhost:8080/?pgsql=paladindb&username=postgres&db=paladin (password is in `.env` file)
 
-## www
+## WWW
 
 1. Code is in `www` folder
 1. Build the container: `docker build -t paladin/www .` from the `www` folder
@@ -20,11 +24,11 @@ Then open
 
 ## Import data
 
-* Open code in devcontainer
-* In `main.py` update the `CSV_DATA_FILE` with newest value
+* Open project in devcontainer
+* In `src/main.py` update the `CSV_DATA_FILE` with newest value
 * In terminal, run: `python src/main.pl`
 
-This will import the data from CSV file into the database.
+This will import (add) the data from CSV file into the database. To clear the database, run the `src/clear_db.sql` query using Adminer.
 
 ## Work with Alembic
 

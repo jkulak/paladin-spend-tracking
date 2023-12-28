@@ -1,4 +1,4 @@
-"""Imports data from Pocker Expense csv export file and saves it into database."""
+"""Imports data from Pocket Expense CSV export file and saves it into database."""
 import os
 import re
 import sys
@@ -105,6 +105,11 @@ def process_row(row, session):
 def main():
     """Main function."""
     base_file_path = os.path.join(CSV_DATA_DIR, CSV_DATA_FILE)
+    
+    # Check if the file exists and if not, exit the program
+    if not os.path.exists(base_file_path):
+        print(f"🛑 File {base_file_path} does not exist.")
+        sys.exit(1)
     cleaned_file_path = os.path.join(CSV_DATA_DIR, f"cleaned_{CSV_DATA_FILE}")
 
     prepare_csv_file(base_file_path, cleaned_file_path)

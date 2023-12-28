@@ -2,6 +2,10 @@ th {
     cursor: pointer;
 }
 
+table td {
+    padding: 0.5rem;
+}
+
 #idHeader {
     width: 60px;
 }
