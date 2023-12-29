@@ -6,12 +6,13 @@ import FilteringForm from './FilteringForm';
 
 function App() {
   const [searchTerm, setSearchTerm] = useState('');
+  const [valueFilter, setValueFilter] = useState('expense');
   const [inputSearchTerm, setInputSearchTerm] = useState('');
   const [transactions, setTransactions] = useState([]);
   const [sortColumn, setSortColumn] = useState(null);
   const [sortDirection, setSortDirection] = useState('asc');
 
-  useDataLoader(searchTerm, setTransactions, sortColumn, sortDirection);
+  useDataLoader(searchTerm, valueFilter, setTransactions, sortColumn, sortDirection);
 
   const totalValue = Math.floor(transactions.reduce((total, transaction) => total + transaction.value, 0));
 
@@ -25,12 +26,16 @@ function App() {
     setInputSearchTerm(term);
   };
 
+  const handleValueFilter = (filter) => {
+    setValueFilter(filter);
+  };
+
   return (
     <div>
         <div className="container">
             <h1>Pocket expense browser</h1>
             {/* <UserProfile /> */}
-            <FilteringForm onSearchTermChange={term => handleSearch(term)} searchTerm={inputSearchTerm} />
+            <FilteringForm onSearchTermChange={term => handleSearch(term)} onValueFilterChange={filter => handleValueFilter(filter)} searchTerm={inputSearchTerm} />
             <DataStatsPanel totalValue={totalValue} />
             <DataTable transactions={transactions} onSort={handleSort} onTagClick={handleSearch} />
         </div>
