@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import './FilteringForm.css';
 
 const FilteringForm = ({ onSearchTermChange, onValueFilterChange, searchTerm }) => {
     const [valueFilter, setValueFilter] = useState('expense');
+    const [startDate, setStartDate] = useState(new Date());
+    const [endDate, setEndDate] = useState(new Date());
 
     const handleSearchChange = (event) => {
         const term = event.target.value;
@@ -18,6 +22,14 @@ const FilteringForm = ({ onSearchTermChange, onValueFilterChange, searchTerm }) 
         <div className="FilteringForm">
             <label htmlFor="searchInput">Search</label>
             <input type="text" id="searchInput" name="search" value={searchTerm} onChange={handleSearchChange} />
+            <div>
+                <label htmlFor="startDate">From:</label>
+                <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
+            </div>
+            <div>
+                <label htmlFor="endDate">To:</label>
+                <DatePicker selected={endDate} onChange={(date) => setEndDate(date)} />
+            </div>
             <div>
                 <button className={`button ${valueFilter === 'income' ? 'button-outline' : ''}`} name="valueFilter" value="expense" id="expense" onClick={handleValueFilterChange}>Expense</button>
                 {/* <input type="radio" id="expense" name="valueFilter" value="expense" checked={valueFilter === 'expense'} onChange={handleValueFilterChange} /> */}
