@@ -1,20 +1,29 @@
-
-
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { act, fireEvent, render, waitFor } from '@testing-library/react';
+import React from 'react';
 import App from './App';
+import { mockTransactions } from './mockTransactions';
 
-test('loads and displays transactions',  async () => {
-    render(<App />);
-    const searchInput = screen.getByRole('textbox');
-    userEvent.type(searchInput, 'note');
-    
+// Mock the useDataLoader hook to return the mockTransactions data
+jest.mock('./DataLoader', () => ({
+  useDataLoader: jest.fn(() => mockTransactions),
+}));
+
+test('loads and displays transactions', async () => {
+  const { getByLabelText, findByText } = render(<App />);
+
+  // Simulate entering "note" in the Filtering Form input
+  await act(async () => {
+    fireEvent.change(getByLabelText(/Search/i), { target: { value: 'note' } });
+  });
+
+  await waitFor(() => {
+    expect(searchInput.value).toBe('note');
+  });
 
 
-    // and click the "Search" button
-
-    // check that the table contains the expected transactions
-
-
-
+  // Check if the transactions are displayed correctly
+  for (const transaction of mockTransactions) {
+    const element = await findByText(transaction.note, { exact: false });
+    expect(element).toBeInTheDocument();
+  }
 });
