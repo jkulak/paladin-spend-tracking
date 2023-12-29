@@ -5,7 +5,7 @@ import './FilteringForm.css';
 
 const FilteringForm = ({ onSearchTermChange, onValueFilterChange, onStartDateChange, onEndDateChange, searchTerm }) => {
     const [valueFilter, setValueFilter] = useState('expense');
-    const [startDate, setStartDate] = useState(new Date());
+    const [startDate, setStartDate] = useState(new Date("2023-01-01"));
     const [endDate, setEndDate] = useState(new Date());
 
     const handleSearchChange = (event) => {
@@ -32,12 +32,7 @@ const FilteringForm = ({ onSearchTermChange, onValueFilterChange, onStartDateCha
             </div>
             <div>
                 <button className={`button ${valueFilter === 'income' ? 'button-outline' : ''}`} name="valueFilter" value="expense" id="expense" onClick={handleValueFilterChange}>Expense</button>
-                {/* <input type="radio" id="expense" name="valueFilter" value="expense" checked={valueFilter === 'expense'} onChange={handleValueFilterChange} /> */}
-                {/* <label htmlFor="expense">Expense</label> */}
-
                 <button className={`button ${valueFilter === 'expense' ? 'button-outline' : ''}`} name="valueFilter" value="income" id="income" onClick={handleValueFilterChange}>Income</button>
-                {/* <input type="radio" id="income" name="valueFilter" value="income" checked={valueFilter === 'income'} onChange={handleValueFilterChange} /> */}
-                {/* <label htmlFor="income">Income</label> */}
             </div>
         </div>
     );

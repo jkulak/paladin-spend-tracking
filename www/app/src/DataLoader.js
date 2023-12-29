@@ -36,7 +36,7 @@ const useDataLoader = (searchTerm, valueFilter, startDate, endDate, setTransacti
             .then(response => response.json())
             .then(data => setTransactions(Array.isArray(data) ? data : []))
             .catch(error => console.error('Error fetching data: ', error));
-    }, [setTransactions, debouncedSearchTerm, valueFilter, sortColumn, sortDirection]);
+    }, [setTransactions, debouncedSearchTerm, valueFilter, startDate, endDate, sortColumn, sortDirection]);
 
 };
 

@@ -11,8 +11,7 @@ function App() {
   const [transactions, setTransactions] = useState([]);
   const [sortColumn, setSortColumn] = useState(null);
   const [sortDirection, setSortDirection] = useState('asc');
-
-  const [startDate, setStartDate] = useState(new Date());
+  const [startDate, setStartDate] = useState(new Date("2023-01-01"));
   const [endDate, setEndDate] = useState(new Date());
 
   useDataLoader(searchTerm, valueFilter, startDate, endDate, setTransactions, sortColumn, sortDirection);
