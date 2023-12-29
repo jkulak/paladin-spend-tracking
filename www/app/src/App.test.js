@@ -1,5 +1,5 @@
+import { act, fireEvent, render, waitFor } from '@testing-library/react';
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
 import App from './App';
 import { mockTransactions } from './mockTransactions';
 
@@ -15,6 +15,11 @@ test('loads and displays transactions', async () => {
   await act(async () => {
     fireEvent.change(getByLabelText(/Search/i), { target: { value: 'note' } });
   });
+
+  await waitFor(() => {
+    expect(searchInput.value).toBe('note');
+  });
+
 
   // Check if the transactions are displayed correctly
   for (const transaction of mockTransactions) {
